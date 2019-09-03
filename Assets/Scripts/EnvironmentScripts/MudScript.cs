@@ -4,20 +4,33 @@ using UnityEngine;
 
 public class MudScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public float originalSpeed;
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping)
+        {
+            originalSpeed = other.GetComponent<Movement>().speed;
+            other.GetComponent<Movement>().speed /= 2f;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerStay(Collider other)
     {
-        
+        if(other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping)
+        {
+            originalSpeed = other.GetComponent<Movement>().speed;
+            other.GetComponent<Movement>().speed /= 2f;
+        }
+
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        
+        if (other.tag.Equals("Player"))
+        {
+            other.GetComponent<Movement>().speed = originalSpeed;
+        }
     }
 }

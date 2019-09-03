@@ -8,10 +8,13 @@ public class Draggable : MonoBehaviour
     public bool draggable = true;
     public float speed = 10f;
     public float startTimeDistance = .5f;
-    private bool act = false;
-    private Vector2 dir;
+    public float weight;
+    public float durability;
+
+    Vector2 dir;
     AstarPath path;
-    private float TimeDistance = 0f;
+    bool act = false;
+    float TimeDistance = 0f;
 
     private void Update()
     {
@@ -19,7 +22,16 @@ public class Draggable : MonoBehaviour
         {
             ShootObject(act, dir, path);
         }
+        destroyObj();
         
+    }
+
+    void destroyObj()
+    {
+        if(durability <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void ShootObject(bool travel, Vector2 direction, AstarPath scan)

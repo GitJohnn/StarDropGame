@@ -34,12 +34,15 @@ public class Projectile : MonoBehaviour
         if (other.tag.Equals("Obstacle"))
         {
             Debug.Log("Bullet Destroyed");
-            Destroy(gameObject);
+            if (other.GetComponent<Draggable>()){
+                other.GetComponent<Draggable>().durability -= dmg;
+            }
+                Destroy(gameObject);
         }
 
         if (transform.tag.Equals("EnemyBullet"))
         {
-            if (other.tag.Equals("Player"))
+            if (other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping)
             {
                 other.transform.GetComponent<Movement>().Damage(dmg);
                 other.transform.GetComponent<Movement>().takeKnockBack(transform.position, knockBackDealt);

@@ -31,12 +31,10 @@ public class EnemyAI : MonoBehaviour {
     float timeSinceLastShot = 1f;
 
     //To Do list
-    //create home point radius to roam
+    //knock should stop AI so that it seems less floaty
     //wounder around home point
-    //add knockback to being hit
     //circle player when attacking
     //add multiple enemy AI options
-    //health component
     //organize variable
 
 
@@ -99,11 +97,14 @@ public class EnemyAI : MonoBehaviour {
     private void UpdateTarget() { //changes target depending on condition "AI"
         if (chaseRadius >= distanceToPlayer) {
             target = player.transform.position;
+            //startMoving();
             if (stopRadius >= distanceToPlayer) {
                 target = transform.position;
+                //stopMoving();
             }
         } else {
             target = homePoint;
+            //startMoving();
         };
     }
 
@@ -140,5 +141,13 @@ public class EnemyAI : MonoBehaviour {
     public void takeKnockBack(Vector3 position, float knockBackForce) {
         Vector3 direction = Vector3.Normalize(transform.position - position);
         rb.AddForce(direction*knockBackForce, ForceMode2D.Impulse);
+    }
+
+    private void stopMoving() {
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+    }
+
+    private void startMoving() {
+        rb.constraints = RigidbodyConstraints2D.None;
     }
 }

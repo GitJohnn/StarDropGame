@@ -10,9 +10,10 @@ public class Grabber : MonoBehaviour
     public float timeToShoot = 0.3f;
     public float raycastSize = 1f;
     public float shootPower = 4f;
-    private float startTimeDelay = 0.5f;
-    private float timeDelay = 0f;
+    public float maxWeight = 100f;
 
+    float startTimeDelay = 0.5f;
+    float timeDelay = 0f;
     private BoxCollider2D grabber;
     private Draggable d = null;
     Shooting shootDir;
@@ -44,7 +45,7 @@ public class Grabber : MonoBehaviour
             if (grabber.IsTouching(d.GetComponent<BoxCollider2D>()))
             {
                 canShoot = false;
-                if (Input.GetMouseButtonDown(0) && d.draggable)
+                if (Input.GetMouseButtonDown(0) && d.draggable && (maxWeight >= d.weight))
                 {
                     //we set it as a child of the stem
                     d.transform.SetParent(this.transform.parent);
