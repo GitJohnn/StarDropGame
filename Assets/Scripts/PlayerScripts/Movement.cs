@@ -11,7 +11,10 @@ public class Movement : MonoBehaviour
 
     public float airTime;
     public float speed;
-    float health = 100;
+    public float maxStamina = 100f;
+    public float maxHealth = 100f;
+    float health;
+    float stamina;
     float knockTime = .2f;
     float dashTime = .4f;
     float dashSpeed = 13f;
@@ -23,6 +26,8 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        stamina = maxStamina;
+        health = maxHealth;
         GameOver = false;
         myRB = GetComponent<Rigidbody2D>();
         player = this.gameObject;
@@ -31,26 +36,25 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isJumping)
+        if (!knockedOrDash & !isJumping)
         {
+            myRB.velocity = moveVelocity;
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 isJumping = true;
+                Jump();
             }
             GetInput();
             Dash(dashDir);
         }
-        else
-        {
-            Jump();
-        }
-    }
 
-    void FixedUpdate()
-    {
-        if (!knockedOrDash & !isJumping)
+        if(stamina < maxStamina)
         {
-            myRB.velocity = moveVelocity;
+            stamina += Time.deltaTime;
+        }
+        else if(stamina > maxStamina)
+        {
+            stamina = maxStamina;
         }
     }
 
@@ -59,7 +63,6 @@ public class Movement : MonoBehaviour
         Vector3 moveTowards = new Vector3(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical") ,0f);
         dashDir = moveTowards;
         moveVelocity = moveTowards.normalized * speed;
-
     }
 
     void Jump()
@@ -71,14 +74,17 @@ public class Movement : MonoBehaviour
 
     void Dash(Vector3 dir)
     {
-        if(dir == Vector3.zero && Input.GetKeyDown(KeyCode.Space))
+        float costOfStamina = 7.5f;
+        //dash in mouse direction in case there is no movement
+        if(dir == Vector3.zero && Input.GetKeyDown(KeyCode.Space) && (stamina >= costOfStamina))
         {
-            //Debug.Log(" dir is zero");
+            stamina -= costOfStamina;
             dir = GameObject.Find("stem").GetComponent<Transform>().transform.right;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && (stamina >= costOfStamina))
         {
+            stamina -= costOfStamina;
             knockedOrDash = true;
             myRB.velocity = Vector3.zero;
             myRB.AddForce(dir * dashSpeed, ForceMode2D.Impulse);
@@ -95,14 +101,19 @@ public class Movement : MonoBehaviour
         else if (health == 0)
         {
             GameOver = true;
-            //Debug.Log("Game is Over!");
         }
     }
 
     public float Health
     {
         get { return health; }
-        set { value = health; }
+        set { health = value; }
+    }
+
+    public float Stamina
+    {
+        get { return stamina; }
+        set { stamina = value; }
     }
 
     public void takeKnockBack(Vector3 position, float knockBackForce)
@@ -111,7 +122,6 @@ public class Movement : MonoBehaviour
         myRB.velocity = Vector3.zero;
         Vector3 direction = Vector3.Normalize(transform.position - position);
         myRB.AddForce(direction * knockBackForce, ForceMode2D.Impulse);
-        Debug.Log("Taken Knockback");
         StartCoroutine(KnockBackAndDash(knockTime));
     }
 

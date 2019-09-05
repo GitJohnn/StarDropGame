@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 5841170706995235140}
   - component: {fileID: 5841170706995235138}
   - component: {fileID: 5841170706995235141}
+  - component: {fileID: 9005396794899709987}
   - component: {fileID: 5841170706995235136}
   m_Layer: 0
   m_Name: Enemy
@@ -143,13 +144,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51bc755b0ab08cb4eb8b8e9f91f19cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAttack: 1
   health: 100
   speed: 500
   nextWaypointDistance: 0.1
   target: {x: 0, y: 0}
   homePoint: {x: -5, y: -0.5, z: 0}
-  chaseRadius: 5
-  attackRadius: 3.75
+  chaseRadius: 7.14
+  attackRadius: 6.85
   stopRadius: 2.5
   bullet: {fileID: 9048752670155731543, guid: e5c3dee2ed15e6e4b83372ecf2998ee1, type: 3}
   timeBetweenShots: 1
@@ -181,6 +183,24 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
+--- !u!114 &9005396794899709987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5841170706995235137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826d2a23da4982a4481379834c50c97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+  speed: 10
+  startTimeDistance: 0.5
+  weight: 0
+  durability: 0
+  damage: 50
 --- !u!50 &5841170706995235136
 Rigidbody2D:
   serializedVersion: 4

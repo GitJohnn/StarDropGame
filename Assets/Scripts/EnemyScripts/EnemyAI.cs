@@ -10,6 +10,9 @@ public class EnemyAI : MonoBehaviour {
     Seeker seeker;
     Rigidbody2D rb;
 
+    Draggable isdraggable;
+    public bool canAttack = true;
+
     [SerializeField] float health = 100f;
 
     [SerializeField] float speed;
@@ -43,6 +46,7 @@ public class EnemyAI : MonoBehaviour {
         player = GameObject.Find("Player");
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        isdraggable = GetComponent<Draggable>();
 
         target = homePoint;
         InvokeRepeating("UpdatePath", 0f, .05f); //Updates Path every 0.05 seconds
@@ -65,12 +69,22 @@ public class EnemyAI : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-        if (attackRadius >= distanceToPlayer) {
+        if (attackRadius >= distanceToPlayer && canAttack) {
             Attack();
         }
-        UpdateTarget();
-        FollowPath();
-        timeSinceLastShot += Time.deltaTime;
+
+        if (canAttack)
+        {
+            UpdateTarget();
+            FollowPath();
+            timeSinceLastShot += Time.deltaTime;
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
+
+        CheckIfDeath();
     }
 
     //Moves Along Path
@@ -120,8 +134,17 @@ public class EnemyAI : MonoBehaviour {
 
     private void Attack() { //Fires bullets
         if (timeSinceLastShot >= timeBetweenShots) {
-            Instantiate(bullet, transform.position, Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * Mathf.Atan2((player.transform.position.y - transform.position.y), (player.transform.position.x - transform.position.x))));
+            Instantiate(bullet, transform.position, Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * Mathf.Atan2((player.transform.position.y - transform.position.y), (player.transform.position.x - transform.position.x))),gameObject.transform);
+
             timeSinceLastShot = 0;
+        }
+    }
+
+    void CheckIfDeath()
+    {
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -131,11 +154,12 @@ public class EnemyAI : MonoBehaviour {
         {
             health -= dmg;
         }
-        else if(health == 0f)
-        {
-            //Debug.Log("Enemy health is " + health + ", Destroy!");
-            Destroy(gameObject);
-        }
+    }
+
+    public float Health
+    {
+        get { return health; }
+        set { health = value; }
     }
 
     public void takeKnockBack(Vector3 position, float knockBackForce) {

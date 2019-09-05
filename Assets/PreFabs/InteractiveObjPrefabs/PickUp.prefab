@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3789752878247120904}
   - component: {fileID: 3789752878247120909}
   - component: {fileID: 3789752878247120908}
+  - component: {fileID: 1374544682}
   m_Layer: 8
   m_Name: PickUp
   m_TagString: Obstacle
@@ -123,3 +124,27 @@ MonoBehaviour:
   draggable: 1
   speed: 10
   startTimeDistance: 0.3
+  weight: 5
+  durability: 100
+  damage: 50
+--- !u!50 &1374544682
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3789752878247120905}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 3
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

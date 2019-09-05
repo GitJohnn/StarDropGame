@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf70ae83c59d9b4baaf44e9601bf207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  airTime: 0
+  airTime: 2
   speed: 5
   isJumping: 0
 --- !u!50 &9125608888302341124
@@ -343,3 +343,4 @@ MonoBehaviour:
   timeToShoot: 0.3
   raycastSize: 1
   shootPower: 4
+  maxWeight: 100

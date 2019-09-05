@@ -10,6 +10,13 @@ public class Projectile : MonoBehaviour
     public float dmg;
     public float knockBackDealt;
 
+    Transform bulletParent;
+
+    private void Awake()
+    {
+        bulletParent = transform.parent;
+    }
+
     void Update()
     {
         Shooting();
@@ -20,7 +27,6 @@ public class Projectile : MonoBehaviour
         transform.Translate(Vector2.right * speed * Time.deltaTime);
         if(timeDestroy >= startTimeDestroy)
         {
-            //Debug.Log("Bullet destroyed");
             Destroy(gameObject);
         }
         else
@@ -33,15 +39,19 @@ public class Projectile : MonoBehaviour
     {
         if (other.tag.Equals("Obstacle"))
         {
-            Debug.Log("Bullet Destroyed");
             if (other.GetComponent<Draggable>()){
                 other.GetComponent<Draggable>().durability -= dmg;
             }
                 Destroy(gameObject);
         }
-
+        // depends on bullet tag
         if (transform.tag.Equals("EnemyBullet"))
         {
+            if (other.tag.Equals("Enemy") && other.transform != bulletParent)
+            {
+                other.transform.GetComponent<EnemyAI>().Damage(dmg);
+                other.transform.GetComponent<EnemyAI>().takeKnockBack(transform.position, knockBackDealt);
+            }
             if (other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping)
             {
                 other.transform.GetComponent<Movement>().Damage(dmg);
