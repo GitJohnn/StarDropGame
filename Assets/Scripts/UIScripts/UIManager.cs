@@ -39,4 +39,5 @@ public class UIManager : MonoBehaviour
     {
         grabTimer.fillAmount = grabber.Grip / grabber.maxGrip;
     }
+
 }
