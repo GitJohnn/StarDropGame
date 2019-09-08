@@ -4829,6 +4829,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1374544682, guid: 85d82a4840f5e174291a24f026f08190, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3789752878247120908, guid: 85d82a4840f5e174291a24f026f08190,
         type: 3}
       propertyPath: durability
@@ -4838,10 +4842,6 @@ PrefabInstance:
         type: 3}
       propertyPath: weight
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1374544682, guid: 85d82a4840f5e174291a24f026f08190, type: 3}
-      propertyPath: m_Constraints
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85d82a4840f5e174291a24f026f08190, type: 3}

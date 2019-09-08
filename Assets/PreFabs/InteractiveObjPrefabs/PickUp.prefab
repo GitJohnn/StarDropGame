@@ -72,8 +72,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 154267299d4373b47851ea07fe93d573, type: 3}
-  m_Color: {r: 0.5707547, g: 0.8584339, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 415f28e858804214f919b57c4b0804e5, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
   draggable: 1
   speed: 10
   startTimeDistance: 0.3
-  weight: 5
+  weight: 10
   durability: 100
   damage: 50
 --- !u!50 &1374544682
