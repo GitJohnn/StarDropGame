@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject PausePanel;
+    public bool isPaused = false;
 
     // Update is called once per frame
     void Update()
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
         if (PausePanel)
         {
             PausePanel.SetActive(true);
+            isPaused = true;
             Rigidbody2D[] obj = GameObject.FindObjectsOfType<Rigidbody2D>();
             Deactivate(obj);
         }

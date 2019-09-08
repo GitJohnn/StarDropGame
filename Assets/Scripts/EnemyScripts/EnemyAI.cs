@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour {
     GameObject player;
     Seeker seeker;
     Rigidbody2D rb;
+    GameManager manager;
 
     Draggable isdraggable;
     public bool canAttack = true;
@@ -47,6 +48,7 @@ public class EnemyAI : MonoBehaviour {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         isdraggable = GetComponent<Draggable>();
+        manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
 
         target = homePoint;
         InvokeRepeating("UpdatePath", 0f, .05f); //Updates Path every 0.05 seconds
@@ -69,7 +71,7 @@ public class EnemyAI : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-        if (attackRadius >= distanceToPlayer && canAttack) {
+        if (attackRadius >= distanceToPlayer && canAttack && !manager.isPaused) {
             Attack();
         }
 
@@ -135,7 +137,6 @@ public class EnemyAI : MonoBehaviour {
     private void Attack() { //Fires bullets
         if (timeSinceLastShot >= timeBetweenShots) {
             Instantiate(bullet, transform.position, Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * Mathf.Atan2((player.transform.position.y - transform.position.y), (player.transform.position.x - transform.position.x))),gameObject.transform);
-
             timeSinceLastShot = 0;
         }
     }

@@ -53,7 +53,7 @@ public class Grabber : MonoBehaviour
                 if (grabber.IsTouching(d.GetComponent<CircleCollider2D>()))
                 {
                     canShoot = false;
-                    if (Input.GetMouseButtonDown(0) && d.draggable && canGrab)
+                    if (Input.GetMouseButtonDown(1) && d.draggable && canGrab)
                     {
                         d.GetComponent<EnemyAI>().canAttack = false;
                         //we set it as a child of the stem
@@ -73,7 +73,7 @@ public class Grabber : MonoBehaviour
             else if (grabber.IsTouching(d.GetComponent<BoxCollider2D>()) && d.tag.Equals("Obstacle"))
             {
                 canShoot = false;
-                if (Input.GetMouseButtonDown(0) && d.draggable && canGrab)
+                if (Input.GetMouseButtonDown(1) && d.draggable && canGrab)
                 {
                     //we set it as a child of the stem
                     d.transform.SetParent(this.transform.parent);
@@ -173,7 +173,7 @@ public class Grabber : MonoBehaviour
 
     public void LetGoObject()
     {
-        if (Input.GetMouseButtonDown(0) && hldObj && (timeDelay >= startTimeDelay))
+        if (Input.GetMouseButtonDown(1) && hldObj && (timeDelay >= startTimeDelay))
         {
             //is used for enemies to stop shooting
             if (!d.tag.Equals("Obstacle"))
@@ -195,7 +195,7 @@ public class Grabber : MonoBehaviour
             //Debug.Log("Let Go");
             d = null;
         }
-        else if (Input.GetMouseButtonDown(1) && hldObj)
+        else if (Input.GetMouseButtonDown(0) && hldObj)
         {
             if (d.tag.Equals("Obstacle"))
             {
