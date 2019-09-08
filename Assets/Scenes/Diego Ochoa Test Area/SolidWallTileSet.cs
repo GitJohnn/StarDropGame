@@ -6,6 +6,8 @@ using UnityEngine;
 public class SolidWallTileSet : MonoBehaviour {
 
     [SerializeField] bool debug;
+    public bool penetrable = false;
+
     // Start is called before the first frame update
     void Start() {
         if (debug) {

@@ -16,7 +16,7 @@ public class Grabber : MonoBehaviour
     float grip;
     bool soreHands = false;
     bool canGrab = true;
-    float startTimeDelay = 0.5f;
+    float startTimeDelay = 0.1f;
     float timeDelay = 0f;
     private BoxCollider2D grabber;
     private Draggable d = null;

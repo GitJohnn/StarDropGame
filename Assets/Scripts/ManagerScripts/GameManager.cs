@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     public void ResumeBtn()
     {
         PausePanel.SetActive(false);
+        isPaused = false;
         Rigidbody2D[] obj = GameObject.FindObjectsOfType<Rigidbody2D>();
         Activate(obj);
     }

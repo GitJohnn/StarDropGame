@@ -138,6 +138,7 @@ public class EnemyAI : MonoBehaviour {
         if (timeSinceLastShot >= timeBetweenShots) {
             Instantiate(bullet, transform.position, Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * Mathf.Atan2((player.transform.position.y - transform.position.y), (player.transform.position.x - transform.position.x))),gameObject.transform);
             timeSinceLastShot = 0;
+            Debug.Log("Enemy shoot bullet");
         }
     }
 
