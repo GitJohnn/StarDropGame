@@ -4874,12 +4874,12 @@ PrefabInstance:
     - target: {fileID: 6959867881122505659, guid: c01f8f853b0faeb49b4d0c677227e8de,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.29
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 6959867881122505659, guid: c01f8f853b0faeb49b4d0c677227e8de,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7
+      value: 1.53
       objectReference: {fileID: 0}
     - target: {fileID: 6959867881122505659, guid: c01f8f853b0faeb49b4d0c677227e8de,
         type: 3}
@@ -4926,6 +4926,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+    - target: {fileID: 6959867881122505658, guid: c01f8f853b0faeb49b4d0c677227e8de,
+        type: 3}
+      propertyPath: stopRadius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6959867881122505658, guid: c01f8f853b0faeb49b4d0c677227e8de,
+        type: 3}
+      propertyPath: speed
+      value: 240
+      objectReference: {fileID: 0}
+>>>>>>> Stashed changes
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c01f8f853b0faeb49b4d0c677227e8de, type: 3}
 --- !u!1001 &3789752877953536033
@@ -5032,7 +5045,7 @@ PrefabInstance:
     - target: {fileID: 361026374588217000, guid: aa07f1df184d88f4fab2542219aff693,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 361026374588217002, guid: aa07f1df184d88f4fab2542219aff693,
         type: 3}
@@ -5098,6 +5111,11 @@ PrefabInstance:
         type: 3}
       propertyPath: stopRadius
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 361026374588217003, guid: aa07f1df184d88f4fab2542219aff693,
+        type: 3}
+      propertyPath: chaseRadius
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa07f1df184d88f4fab2542219aff693, type: 3}
