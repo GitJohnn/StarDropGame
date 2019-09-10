@@ -8,6 +8,8 @@ public class GolemScript : MonoBehaviour
     public GameObject bulletSpawn;
 
     public float dmg;
+    public float stompDmg;
+    public float stompKnockBack;
     public float startTimeAttack;
     public float bolderAttackDelay;
     public float stompAttackDelay;
@@ -57,11 +59,23 @@ public class GolemScript : MonoBehaviour
     {
         isAttacking = true;
         golemRB.constraints = RigidbodyConstraints2D.FreezePosition;
-        RaycastHit2D hitinfo = Physics2D.Raycast(transform.position, transform.up, stompRadius, stompVictims);
-        if (hitinfo.collider != null)
+        RaycastHit2D[] sphereInfo = Physics2D.CircleCastAll(transform.position, stompRadius, -Vector2.up, stompRadius * 2, stompVictims);
+        //check if we hitplayer
+        Debug.Log("Stomp hit " + sphereInfo.Length + " enemies");
+        foreach (RaycastHit2D ray in sphereInfo)
         {
-            Debug.Log("stomp hit smthng");
-            Debug.Log(hitinfo.transform.name);
+            if (ray.collider.tag.Equals("Player"))
+            {
+                ray.collider.GetComponent<Movement>().Damage(stompDmg);
+                ray.collider.GetComponent<Movement>().takeKnockBack(transform.position, stompKnockBack);
+                Debug.Log("Player was stomped");
+            }
+            if (ray.collider.tag.Equals("Enemy") && ray.collider != gameObject.GetComponent<CircleCollider2D>())
+            {
+                ray.collider.GetComponent<EnemyAI>().Damage(stompDmg);
+                ray.collider.GetComponent<EnemyAI>().takeKnockBack(transform.position, stompKnockBack);
+                Debug.Log("Enemy was stomped");
+            }
         }
         yield return new WaitForSeconds(time);
         Debug.Log("stomp stop");
