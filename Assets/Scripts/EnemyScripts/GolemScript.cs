@@ -57,7 +57,7 @@ public class GolemScript : MonoBehaviour
     {
         isAttacking = true;
         golemRB.constraints = RigidbodyConstraints2D.FreezePosition;
-        RaycastHit2D hitinfo = Physics2D.Raycast(transform.position, transform.up, stompRadius, );
+        RaycastHit2D hitinfo = Physics2D.Raycast(transform.position, transform.up, stompRadius, stompVictims);
         if (hitinfo.collider != null)
         {
             Debug.Log("stomp hit smthng");

@@ -1126,36 +1126,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85d82a4840f5e174291a24f026f08190, type: 3}
---- !u!1 &1474933858
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1474933859}
-  m_Layer: 0
-  m_Name: GolemBulletSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1474933859
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474933858}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.807, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5424450006654006018}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1495434421
 GameObject:
   m_ObjectHideFlags: 0
@@ -4956,72 +4926,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6959867881122505658, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: stopRadius
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959867881122505658, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: speed
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959867881122505658, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: attackRadius
-      value: 4.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959867881122505658, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: chaseRadius
-      value: 5.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959867881122505658, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: homePoint.x
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959867881122505658, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: homePoint.y
-      value: 1.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3455178348729135124, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: bulletSpawn
-      value: 
-      objectReference: {fileID: 1474933858}
-    - target: {fileID: 3455178348729135124, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: bullet
-      value: 
-      objectReference: {fileID: 1775144612096309478, guid: e4181311b87e48d4ca326c6a9f21b7e3,
-        type: 3}
-    - target: {fileID: 3455178348729135124, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: shootDis
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3455178348729135124, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: attackDelay
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3455178348729135124, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: bolderAttackDelay
-      value: 0.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 3455178348729135124, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: stompAttackDelay
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3455178348729135124, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: stompVictims.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c01f8f853b0faeb49b4d0c677227e8de, type: 3}
 --- !u!1001 &3789752877953536033
@@ -5093,12 +4997,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85d82a4840f5e174291a24f026f08190, type: 3}
---- !u!4 &5424450006654006018 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6959867881122505659, guid: c01f8f853b0faeb49b4d0c677227e8de,
-    type: 3}
-  m_PrefabInstance: {fileID: 3157567030200045753}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5841170706581527809 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 361026374588217000, guid: aa07f1df184d88f4fab2542219aff693,
@@ -5566,11 +5464,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 9125608888302341177, guid: f90c3b01347b7154c93f5c36108bead0,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4369935495060941052, guid: f90c3b01347b7154c93f5c36108bead0,
         type: 3}
