@@ -29,21 +29,9 @@ public class Projectile : MonoBehaviour
 
     void Shooting()
     {
-        if (!transform.tag.Equals("EnemyBullet"))
-        {
-            //changed the moving method so i could freeze rigidbody on pause
-            //myRB.AddForce(transform.right * speed * Time.deltaTime, ForceMode2D.Impulse);
-            //myRB.velocity = transform.right * speed;
-        }
-        else
-        {
-            //changed the moving method so i could freeze rigidbody on pause
-            //myRB.AddForce(transform.right * speed * Time.deltaTime, ForceMode2D.Impulse);
-            //transform.Translate(Vector2.right * speed * Time.deltaTime);
-        }
+        //changed the moving method to freeze rigidbody on pause
         Vector3 newPosition = transform.position + (transform.right * speed * Time.deltaTime);
         myRB.MovePosition(newPosition);
-
         //Check if the bullet should be destroyed
         if (timeDestroy >= startTimeDestroy)
         {

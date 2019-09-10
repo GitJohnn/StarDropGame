@@ -30,9 +30,9 @@ public class EnemyAI : MonoBehaviour {
     [SerializeField] float stopRadius;
     float distanceToPlayer;
 
-    [SerializeField] GameObject bullet;
-    [SerializeField] float timeBetweenShots = 1f;
-    float timeSinceLastShot = 1f;
+    //attacking scripts
+    SlimeScript slime = null;
+    GolemScript golem = null;
 
     //To Do list
     //knock should stop AI so that it seems less floaty
@@ -40,7 +40,6 @@ public class EnemyAI : MonoBehaviour {
     //circle player when attacking
     //add multiple enemy AI options
     //organize variable
-
 
     // Start is called before the first frame update
     void Start() {
@@ -72,14 +71,25 @@ public class EnemyAI : MonoBehaviour {
     void FixedUpdate() {
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         if (attackRadius >= distanceToPlayer && canAttack && !manager.isPaused) {
-            Attack();
+            //rotates enemy to look at player
+            LookAtPlayer();
+            //set the enemyAIto use the script given.
+            if (transform.name.Contains("Slime"))
+            {
+                slime = GetComponent<SlimeScript>();
+                slime.Attack(player);
+            }
+            else if (transform.name.Contains("Golem"))
+            {
+                golem = GetComponent<GolemScript>();                
+                golem.Attack(player,attackRadius,stopRadius,rb);
+            }
         }
 
         if (canAttack)
         {
             UpdateTarget();
             FollowPath();
-            timeSinceLastShot += Time.deltaTime;
         }
         else
         {
@@ -88,6 +98,15 @@ public class EnemyAI : MonoBehaviour {
 
         CheckIfDeath();
     }
+
+    //Look Towards player
+    void LookAtPlayer()
+    {
+        Vector3 difference = player.transform.position - transform.position;
+        float rotz = Mathf.Atan2(difference.y,difference.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotz);
+    }
+
 
     //Moves Along Path
     private void FollowPath() {
@@ -132,14 +151,6 @@ public class EnemyAI : MonoBehaviour {
         Gizmos.DrawWireSphere(transform.position, stopRadius);
         Gizmos.color = new Color(.5f, 0f, 0f);
         Gizmos.DrawWireSphere(transform.position, attackRadius);
-    }
-
-    private void Attack() { //Fires bullets
-        if (timeSinceLastShot >= timeBetweenShots) {
-            Instantiate(bullet, transform.position, Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * Mathf.Atan2((player.transform.position.y - transform.position.y), (player.transform.position.x - transform.position.x))),gameObject.transform);
-            timeSinceLastShot = 0;
-            Debug.Log("Enemy shoot bullet");
-        }
     }
 
     void CheckIfDeath()

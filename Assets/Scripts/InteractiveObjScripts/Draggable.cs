@@ -34,9 +34,20 @@ public class Draggable : MonoBehaviour
         {
             ShootObj(act, dir, path);
         }
+
         if (transform.tag.Equals("Obstacle"))
         {
             destroyObj();
+            CheckVelocity();
+        }
+    }
+
+    void CheckVelocity()
+    {
+        if(myRB.velocity.magnitude > 3f)
+        {
+            Debug.Log(myRB.velocity.magnitude);
+            path.Scan();
         }
     }
 
