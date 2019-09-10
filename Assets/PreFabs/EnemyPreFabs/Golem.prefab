@@ -120,8 +120,6 @@ MonoBehaviour:
   bullet: {fileID: 1775144612096309478, guid: e4181311b87e48d4ca326c6a9f21b7e3, type: 3}
   bulletSpawn: {fileID: 1474933858}
   dmg: 10
-  stompDmg: 30
-  stompKnockBack: 3
   startTimeAttack: 2
   bolderAttackDelay: 0.45
   stompAttackDelay: 0.8
@@ -171,7 +169,7 @@ MonoBehaviour:
   draggable: 1
   speed: 10
   startTimeDistance: 0.5
-  weight: 25
+  weight: 0
   durability: 0
   damage: 50
 --- !u!50 &6959867881122505656
