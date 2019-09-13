@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class MudScript : MonoBehaviour
 {
+    public float mudStickyness = 2f;
 
-    public float originalSpeed;
+    float originalSpeed;
+    float enemyOriginalSpeed;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping)
         {
             originalSpeed = other.GetComponent<Movement>().speed;
-            other.GetComponent<Movement>().speed /= 2f;
+            other.GetComponent<Movement>().speed /= mudStickyness;
         }
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping)
+        if (other.tag.Equals("Enemy"))
         {
-            originalSpeed = other.GetComponent<Movement>().speed;
-            other.GetComponent<Movement>().speed /= 2f;
+            Debug.Log("Eemy entered mud");
+            enemyOriginalSpeed = other.GetComponent<EnemyAI>().Speed;
+            other.GetComponent<EnemyAI>().Speed /= mudStickyness;
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -31,6 +30,11 @@ public class MudScript : MonoBehaviour
         if (other.tag.Equals("Player"))
         {
             other.GetComponent<Movement>().speed = originalSpeed;
+        }
+
+        if (other.tag.Equals("Enemy"))
+        {
+            other.GetComponent<EnemyAI>().Speed = enemyOriginalSpeed;
         }
     }
 }

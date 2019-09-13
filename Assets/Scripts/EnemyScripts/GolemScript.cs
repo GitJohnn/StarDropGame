@@ -6,10 +6,14 @@ public class GolemScript : MonoBehaviour
 {
     public GameObject bullet;
     public GameObject bulletSpawn;
+    public GameObject stompGolemBullet;
+    public GameObject[] stompBulletSpawn;
 
     public float dmg;
+    public float thornDmg;
     public float stompDmg;
-    public float stompKnockBack;
+    public float stompKnockback;
+    public float thornKnockback;
     public float startTimeAttack;
     public float bolderAttackDelay;
     public float stompAttackDelay;
@@ -49,9 +53,9 @@ public class GolemScript : MonoBehaviour
         isAttacking = true;
         golemRB.constraints = RigidbodyConstraints2D.FreezePosition;
         yield return new WaitForSeconds(time);
+        isAttacking = false;
         Instantiate(bullet, bulletSpawn.transform.position, transform.rotation);
         timeAttack = 0;
-        isAttacking = false;
         golemRB.constraints = RigidbodyConstraints2D.None;
     }
 
@@ -67,20 +71,31 @@ public class GolemScript : MonoBehaviour
             if (ray.collider.tag.Equals("Player"))
             {
                 ray.collider.GetComponent<Movement>().Damage(stompDmg);
-                ray.collider.GetComponent<Movement>().takeKnockBack(transform.position, stompKnockBack);
-                Debug.Log("Player was stomped");
+                ray.collider.GetComponent<Movement>().takeKnockBack(transform.position, stompKnockback);
             }
             if (ray.collider.tag.Equals("Enemy") && ray.collider != gameObject.GetComponent<CircleCollider2D>())
             {
                 ray.collider.GetComponent<EnemyAI>().Damage(stompDmg);
-                ray.collider.GetComponent<EnemyAI>().takeKnockBack(transform.position, stompKnockBack);
-                Debug.Log("Enemy was stomped");
+                ray.collider.GetComponent<EnemyAI>().takeKnockBack(transform.position, stompKnockback);
             }
         }
+        foreach (GameObject i in stompBulletSpawn)
+        {
+            Instantiate(stompGolemBullet, i.transform.position, i.transform.rotation);
+        }
         yield return new WaitForSeconds(time);
-        Debug.Log("stomp stop");
-        timeAttack = 0;
         isAttacking = false;
+        timeAttack = 0;
         golemRB.constraints = RigidbodyConstraints2D.None;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.tag.Equals("Player") && isAttacking)
+        {
+            collision.transform.GetComponent<Movement>().Damage(thornDmg);
+            collision.transform.GetComponent<Movement>().takeKnockBack(transform.position, thornKnockback);
+        }
+    }
+
 }

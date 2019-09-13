@@ -41,13 +41,8 @@ public class Grabber : MonoBehaviour
 
     public void GrabObject()
     {
-        
         if (d)
         {
-            //Debug.Log(d.transform.parent);
-            //Debug.DrawRay(transform.position, Vector3.right);
-            //Debug.Log(hit.Length);
-
             if (!d.tag.Equals("Obstacle"))
             {
                 if (grabber.IsTouching(d.GetComponent<CircleCollider2D>()))
@@ -93,9 +88,9 @@ public class Grabber : MonoBehaviour
                 d = this.transform.parent.GetComponentInChildren<Draggable>();
             }
             //check if enemy was destroyed while grabbed
-            if (d.tag.Equals("Enemy"))
+            if (d.tag.Equals("Enemy") && hldObj)
             {
-                if (hldObj && (d.GetComponent<EnemyAI>().Health <= 0))
+                if (d.GetComponent<EnemyAI>().Health <= 0)
                 {
                     d = null;
                     hldObj = false;
@@ -103,11 +98,10 @@ public class Grabber : MonoBehaviour
                     StartCoroutine(canGrabAgain(waitTimeToGrab));
                 }
             }
-
             // check if the object is destroyed while being held special of Obstacles
-            if (d.tag.Equals("Obstacle"))
+            if (d.tag.Equals("Obstacle") && hldObj)
             {
-                if (hldObj && d.durability <= 0)
+                if (d.durability <= 0)
                 {
                     d = null;
                     hldObj = false;
@@ -115,13 +109,11 @@ public class Grabber : MonoBehaviour
                     StartCoroutine(canGrabAgain(waitTimeToGrab));
                 }
             }
-
             //to keep the object at the grabbers location
             if (hldObj && d.transform.localPosition != transform.localPosition + addDirection)
             {      
                 d.transform.localPosition = transform.localPosition + addDirection;
             }
-
             //SoreHands Effect
             SoreHands();
         }
@@ -214,7 +206,6 @@ public class Grabber : MonoBehaviour
         else
         {
             timeDelay += Time.deltaTime;
-            //Debug.Log(timeDelay);
         }
     }
 

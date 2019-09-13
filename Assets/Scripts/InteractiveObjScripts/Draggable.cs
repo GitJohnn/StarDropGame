@@ -34,7 +34,6 @@ public class Draggable : MonoBehaviour
         {
             ShootObj(act, dir, path);
         }
-
         if (transform.tag.Equals("Obstacle"))
         {
             destroyObj();
@@ -46,7 +45,6 @@ public class Draggable : MonoBehaviour
     {
         if(myRB.velocity.magnitude > 3f)
         {
-            Debug.Log(myRB.velocity.magnitude);
             path.Scan();
         }
     }
@@ -69,25 +67,26 @@ public class Draggable : MonoBehaviour
 
     public void ShootObj(bool travel, Vector2 direction, AstarPath scan)
     {
+        // here we make the object grabbed be thrown.
         act = travel;
         dir = direction;
         path = scan;
         if (TimeDistance <= startTimeDistance)
         {
+            // if we want to make the object bounce we need to change this.
             this.transform.Translate(direction.normalized * speed * Time.deltaTime);
         }
         else
         {
-            EnemyAI enemy = GetComponent<EnemyAI>();
             act = false;
             TimeDistance = 0;
             if (transform.tag.Equals("Obstacle"))
             {
                 path.Scan();
             }
-            else if (enemy)
+            else if (transform.tag.Equals("Enemy"))
             {
-                enemy.canAttack = true;
+                GetComponent<EnemyAI>().canAttack = true;
             }
         }
         TimeDistance += Time.deltaTime;

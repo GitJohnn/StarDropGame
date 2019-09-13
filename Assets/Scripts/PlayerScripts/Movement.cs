@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     public float speed;
     public float maxStamina = 100f;
     public float maxHealth = 100f;
+    public float staminaCostofDash = 7.5f;
     float health;
     float stamina;
     float knockTime = .2f;
@@ -34,7 +35,7 @@ public class Movement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!knockedOrDash & !isJumping)
         {
@@ -47,12 +48,16 @@ public class Movement : MonoBehaviour
             GetInput();
             Dash(dashDir);
         }
+        UpdateStamin();
+    }
 
-        if(stamina < maxStamina)
+    void UpdateStamin()
+    {
+        if (stamina < maxStamina)
         {
             stamina += Time.deltaTime;
         }
-        else if(stamina > maxStamina)
+        else if (stamina > maxStamina)
         {
             stamina = maxStamina;
         }
@@ -74,17 +79,16 @@ public class Movement : MonoBehaviour
 
     void Dash(Vector3 dir)
     {
-        float costOfStamina = 7.5f;
         //dash in mouse direction in case there is no movement
-        if(dir == Vector3.zero && Input.GetKeyDown(KeyCode.Space) && (stamina >= costOfStamina))
+        if(dir == Vector3.zero && Input.GetKeyDown(KeyCode.Space) && (stamina >= staminaCostofDash))
         {
-            stamina -= costOfStamina;
+            stamina -= staminaCostofDash;
             dir = GameObject.Find("stem").GetComponent<Transform>().transform.right;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && (stamina >= costOfStamina))
+        if (Input.GetKeyDown(KeyCode.Space) && (stamina >= staminaCostofDash))
         {
-            stamina -= costOfStamina;
+            stamina -= staminaCostofDash;
             knockedOrDash = true;
             myRB.velocity = Vector3.zero;
             myRB.AddForce(dir * dashSpeed, ForceMode2D.Impulse);

@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 361026374588217002}
   - component: {fileID: 361026374588217005}
   - component: {fileID: 361026374588217003}
+  - component: {fileID: 5841170706581527810}
   - component: {fileID: 361026374588217004}
   - component: {fileID: 2948458010253377482}
   - component: {fileID: 361026374588217001}
@@ -150,11 +151,24 @@ MonoBehaviour:
   nextWaypointDistance: 0.1
   target: {x: 0, y: 0}
   homePoint: {x: -5, y: -0.5, z: 0}
-  chaseRadius: 7.14
-  attackRadius: 6.85
-  stopRadius: 2.5
-  bullet: {fileID: 9048752670155731543, guid: e5c3dee2ed15e6e4b83372ecf2998ee1, type: 3}
-  timeBetweenShots: 1
+  chaseRadius: 8
+  attackRadius: 1.5
+  stopRadius: 0.4
+--- !u!114 &5841170706581527810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361026374588217000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9736a249f70637545877bd529f13e3f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 10
+  startTimeAttack: 2
+  slimeKnockback: 3
 --- !u!114 &361026374588217004
 MonoBehaviour:
   m_ObjectHideFlags: 0

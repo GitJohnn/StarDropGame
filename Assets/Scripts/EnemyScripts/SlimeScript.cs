@@ -8,6 +8,7 @@ public class SlimeScript : MonoBehaviour
 
     public float dmg;
     public float startTimeAttack;
+    public float slimeKnockback;
     float timeAttack = 0;
     bool isColliding = false;
 
@@ -21,8 +22,8 @@ public class SlimeScript : MonoBehaviour
     {
         if (timeAttack >= startTimeAttack && isColliding)
         {
-            Debug.Log("Player Taking Damage");
             player.GetComponent<Movement>().Damage(dmg);
+            player.GetComponent<Movement>().takeKnockBack(transform.position,slimeKnockback);
             timeAttack = 0;
         }
         else

@@ -121,6 +121,7 @@ public class EnemyAI : MonoBehaviour {
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
         rb.AddForce(force);
+        //rb.velocity = force; this would be better for movement, but doesn't work.
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -167,6 +168,12 @@ public class EnemyAI : MonoBehaviour {
         {
             health -= dmg;
         }
+    }
+
+    public float Speed
+    {
+        get { return speed; }
+        set { speed = value; }
     }
 
     public float Health
