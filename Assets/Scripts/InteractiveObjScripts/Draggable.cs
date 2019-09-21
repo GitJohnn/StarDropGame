@@ -86,7 +86,7 @@ public class Draggable : MonoBehaviour
             }
             else if (transform.tag.Equals("Enemy"))
             {
-                GetComponent<EnemyAI>().canAttack = true;
+                GetComponent<EnemyAI>().useDefaultMovement = true;
             }
         }
         TimeDistance += Time.deltaTime;

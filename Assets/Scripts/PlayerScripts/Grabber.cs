@@ -50,7 +50,7 @@ public class Grabber : MonoBehaviour
                     canShoot = false;
                     if (Input.GetMouseButtonDown(1) && d.draggable && canGrab)
                     {
-                        d.GetComponent<EnemyAI>().canAttack = false;
+                        d.GetComponent<EnemyAI>().useDefaultMovement = false;
                         //we set it as a child of the stem
                         d.transform.SetParent(this.transform.parent);
                         d.transform.position = this.transform.position;
@@ -142,7 +142,7 @@ public class Grabber : MonoBehaviour
         {
             if (!d.tag.Equals("Obstacle"))
             {
-                d.GetComponent<EnemyAI>().canAttack = true;
+                d.GetComponent<EnemyAI>().useDefaultMovement = true;
             }
             else if (d.tag.Equals("Obstacle"))
             {
@@ -170,7 +170,7 @@ public class Grabber : MonoBehaviour
             //is used for enemies to stop shooting
             if (!d.tag.Equals("Obstacle"))
             {             
-                d.GetComponent<EnemyAI>().canAttack = true;
+                d.GetComponent<EnemyAI>().useDefaultMovement = true;
             }
             else if(d.tag.Equals("Obstacle"))
             {

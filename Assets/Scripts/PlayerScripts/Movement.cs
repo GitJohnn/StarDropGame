@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
 
     public float airTime;
     public float speed;
+    public float SPEED;
     public float maxStamina = 100f;
     public float maxHealth = 100f;
     public float staminaCostofDash = 7.5f;
@@ -27,6 +28,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        SPEED = speed; //never change SPEED
         stamina = maxStamina;
         health = maxHealth;
         GameOver = false;
@@ -39,7 +41,7 @@ public class Movement : MonoBehaviour
     {
         if (!knockedOrDash & !isJumping)
         {
-            myRB.velocity = moveVelocity;
+            myRB.AddForce(moveVelocity);
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 isJumping = true;
@@ -73,7 +75,7 @@ public class Movement : MonoBehaviour
     void Jump()
     {
         //set velocity equal to zero.
-        myRB.velocity = Vector2.zero;
+        myRB.constraints = RigidbodyConstraints2D.FreezeAll;
         StartCoroutine(AirTime(airTime));
     }
 
@@ -84,13 +86,14 @@ public class Movement : MonoBehaviour
         {
             stamina -= staminaCostofDash;
             dir = GameObject.Find("stem").GetComponent<Transform>().transform.right;
+            myRB.AddForce(dir * dashSpeed, ForceMode2D.Impulse);
+            StartCoroutine(KnockBackAndDash(dashTime));
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && (stamina >= staminaCostofDash))
         {
             stamina -= staminaCostofDash;
             knockedOrDash = true;
-            myRB.velocity = Vector3.zero;
             myRB.AddForce(dir * dashSpeed, ForceMode2D.Impulse);
             StartCoroutine(KnockBackAndDash(dashTime));
         }
@@ -135,6 +138,7 @@ public class Movement : MonoBehaviour
         tmp.a = .25f;
         GetComponent<SpriteRenderer>().color = tmp;
         yield return new WaitForSeconds(time);
+        myRB.constraints = RigidbodyConstraints2D.FreezeRotation;
         isJumping = false;
         tmp.a = 1f;
         GetComponent<SpriteRenderer>().color = tmp;

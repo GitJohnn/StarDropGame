@@ -10,9 +10,6 @@ public class SolidWallTileSet : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        if (debug) {
-            Debug.Log(transform.name);
-        }
     }
 
     // Update is called once per frame
@@ -21,7 +18,6 @@ public class SolidWallTileSet : MonoBehaviour {
         snapPos.x = Mathf.RoundToInt(transform.position.x / 0.5f) * 0.5f;
         snapPos.y = Mathf.RoundToInt(transform.position.y / 0.5f) * 0.5f;
         transform.position = new Vector3(snapPos.x, snapPos.y, 0f);
-
-        transform.name = "(" + snapPos.x + "," + snapPos.y + ")";
+        
     }
 }

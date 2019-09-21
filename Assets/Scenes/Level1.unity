@@ -6030,5 +6030,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9125608888302341125, guid: f90c3b01347b7154c93f5c36108bead0,
+        type: 3}
+      propertyPath: speed
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 9125608888302341124, guid: f90c3b01347b7154c93f5c36108bead0,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f90c3b01347b7154c93f5c36108bead0, type: 3}

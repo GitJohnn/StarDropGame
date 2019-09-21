@@ -34,7 +34,7 @@ public class SlimeScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag.Equals("Player"))
+        if (collision.transform.tag.Equals("Player") && !collision.transform.GetComponent<Movement>().isJumping)
         {
             timeAttack = startTimeAttack;
             isColliding = true;

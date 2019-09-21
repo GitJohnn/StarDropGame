@@ -6,13 +6,13 @@ using System;
 
 public class EnemyAI : MonoBehaviour {
 
-    GameObject player;
+    public GameObject player;
     Seeker seeker;
     Rigidbody2D rb;
     GameManager manager;
 
     Draggable isdraggable;
-    public bool canAttack = true;
+    public bool useDefaultMovement = true;
 
     [SerializeField] float health = 100f;
 
@@ -33,6 +33,7 @@ public class EnemyAI : MonoBehaviour {
     //attacking scripts
     SlimeScript slime = null;
     GolemScript golem = null;
+    BullScript bull = null;
 
     //To Do list
     //knock should stop AI so that it seems less floaty
@@ -70,30 +71,28 @@ public class EnemyAI : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-        if (attackRadius >= distanceToPlayer && canAttack && !manager.isPaused) {
+        if (attackRadius >= distanceToPlayer && !manager.isPaused) {
+            
             //rotates enemy to look at player
             LookAtPlayer();
+
             //set the enemyAIto use the script given.
-            if (transform.name.Contains("Slime"))
-            {
-                slime = GetComponent<SlimeScript>();
+            if (GetComponent<SlimeScript>()) {
+                slime = GetComponent<SlimeScript>(); // PREFORMANCE: write this in start function to save memory/time
                 slime.Attack(player);
-            }
-            else if (transform.name.Contains("Golem"))
-            {
-                golem = GetComponent<GolemScript>();                
-                golem.Attack(player,attackRadius,stopRadius,rb);
+            } else if (GetComponent<GolemScript>()) {
+                golem = GetComponent<GolemScript>();
+                golem.Attack(player, attackRadius, stopRadius, rb);
+            } else if (GetComponent<BullScript>()) {
+                bull = GetComponent<BullScript>();
+                bull.Attack();
             }
         }
 
-        if (canAttack)
+        if (useDefaultMovement)
         {
             UpdateTarget();
             FollowPath();
-        }
-        else
-        {
-            rb.velocity = Vector3.zero;
         }
 
         CheckIfDeath();
@@ -121,7 +120,7 @@ public class EnemyAI : MonoBehaviour {
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
         rb.AddForce(force);
-        //rb.velocity = force; this would be better for movement, but doesn't work.
+        //rb.velocity = force; //this would be better for movement, but doesn't work.
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -133,18 +132,15 @@ public class EnemyAI : MonoBehaviour {
     private void UpdateTarget() { //changes target depending on condition "AI"
         if (chaseRadius >= distanceToPlayer) {
             target = player.transform.position;
-            //startMoving();
             if (stopRadius >= distanceToPlayer) {
                 target = transform.position;
-                //stopMoving();
             }
         } else {
             target = homePoint;
-            //startMoving();
         };
     }
 
-    private void OnDrawGizmos() { //Draws Gizmos delete later When not needed
+    private void OnDrawGizmosSelected() {
         Gizmos.DrawWireSphere(homePoint, .1f);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, chaseRadius);
@@ -187,11 +183,19 @@ public class EnemyAI : MonoBehaviour {
         rb.AddForce(direction*knockBackForce, ForceMode2D.Impulse);
     }
 
-    private void stopMoving() {
-        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+    public Vector3 getHomePoint() {
+        return homePoint;
     }
 
-    private void startMoving() {
-        rb.constraints = RigidbodyConstraints2D.None;
+    public bool isInAttackRaduis() {
+        return (attackRadius >= distanceToPlayer);
+    }
+
+    public bool isInChaseRaduis() {
+        return (attackRadius >= distanceToPlayer);
+    }
+
+    public bool isInStopRaduis() {
+        return (attackRadius >= distanceToPlayer);
     }
 }

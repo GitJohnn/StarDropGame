@@ -68,7 +68,7 @@ public class GolemScript : MonoBehaviour
         Debug.Log("Stomp hit " + sphereInfo.Length + " enemies");
         foreach (RaycastHit2D ray in sphereInfo)
         {
-            if (ray.collider.tag.Equals("Player"))
+            if (ray.collider.tag.Equals("Player") && !ray.transform.GetComponent<Movement>().isJumping)
             {
                 ray.collider.GetComponent<Movement>().Damage(stompDmg);
                 ray.collider.GetComponent<Movement>().takeKnockBack(transform.position, stompKnockback);
@@ -91,7 +91,7 @@ public class GolemScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag.Equals("Player") && isAttacking)
+        if (collision.transform.tag.Equals("Player") && isAttacking && !collision.transform.GetComponent<Movement>().isJumping)
         {
             collision.transform.GetComponent<Movement>().Damage(thornDmg);
             collision.transform.GetComponent<Movement>().takeKnockBack(transform.position, thornKnockback);
