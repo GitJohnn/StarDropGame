@@ -180,7 +180,7 @@ public class EnemyAI : MonoBehaviour {
 
     public void takeKnockBack(Vector3 position, float knockBackForce) {
         Vector3 direction = Vector3.Normalize(transform.position - position);
-        rb.AddForce(direction*knockBackForce, ForceMode2D.Impulse);
+        rb.velocity = direction.normalized * knockBackForce;
     }
 
     public Vector3 getHomePoint() {

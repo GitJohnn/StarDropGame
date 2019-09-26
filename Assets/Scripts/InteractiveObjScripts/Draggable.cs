@@ -60,9 +60,9 @@ public class Draggable : MonoBehaviour
 
     void PushObj(Collision2D actObj)
     {
-        Vector3 pushDir = actObj.transform.position - transform.position;
+        Vector2 pushDir = actObj.transform.position - transform.position;
         myRB.velocity = Vector3.zero;
-        myRB.AddForce(pushDir.normalized * 5f, ForceMode2D.Impulse);
+        myRB.velocity += pushDir.normalized * 5f;
     }
 
     public void ShootObj(bool travel, Vector2 direction, AstarPath scan)
@@ -74,7 +74,7 @@ public class Draggable : MonoBehaviour
         if (TimeDistance <= startTimeDistance)
         {
             // if we want to make the object bounce we need to change this.
-            this.transform.Translate(direction.normalized * speed * Time.deltaTime);
+            this.transform.position += (Vector3)direction.normalized * speed * Time.deltaTime;
         }
         else
         {

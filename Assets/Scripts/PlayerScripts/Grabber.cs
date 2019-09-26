@@ -122,7 +122,7 @@ public class Grabber : MonoBehaviour
     void UpdateGrip()
     {
         //drop or add to the GripRate
-        if (hldObj)
+        if (hldObj && d.tag.Equals("Enemy"))
         {
             grip -= Time.deltaTime;
         }
@@ -183,8 +183,6 @@ public class Grabber : MonoBehaviour
             hldObj = false;
             canShoot = true;
             StartCoroutine(canGrabAgain(waitTimeToGrab));
-            //Debug.Log(d.transform.parent);
-            //Debug.Log("Let Go");
             d = null;
         }
         else if (Input.GetMouseButtonDown(0) && hldObj)

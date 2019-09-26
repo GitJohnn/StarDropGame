@@ -658,10 +658,10 @@ GameObject:
   - component: {fileID: 335811064}
   - component: {fileID: 335811066}
   - component: {fileID: 335811065}
-  - component: {fileID: 335811067}
   - component: {fileID: 335811070}
+  - component: {fileID: 335811067}
   - component: {fileID: 335811069}
-  - component: {fileID: 335811071}
+  - component: {fileID: 335811068}
   m_Layer: 0
   m_Name: ConveyorsEast
   m_TagString: Untagged
@@ -945,11 +945,25 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!114 &335811068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335811063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af3e4896143f574ba2b0b3326a6ed92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir: {x: 1, y: 0}
+  conveyorSpeed: 2
 --- !u!66 &335811069
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -961,7 +975,7 @@ CompositeCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_GeometryType: 0
@@ -993,26 +1007,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!249 &335811071
-AreaEffector2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335811063}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 1792
-  m_UseGlobalAngle: 0
-  m_ForceAngle: 0
-  m_ForceMagnitude: 10
-  m_ForceVariation: 0
-  m_ForceTarget: 1
-  m_Drag: 0
-  m_AngularDrag: 0
 --- !u!1 &465496424
 GameObject:
   m_ObjectHideFlags: 0
@@ -5346,11 +5340,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Golem
       objectReference: {fileID: 0}
-    - target: {fileID: 6959867881122505657, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6959867881122505659, guid: c01f8f853b0faeb49b4d0c677227e8de,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5405,16 +5394,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959867881122505658, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: speed
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 5584449888438659803, guid: c01f8f853b0faeb49b4d0c677227e8de,
-        type: 3}
-      propertyPath: weight
-      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c01f8f853b0faeb49b4d0c677227e8de, type: 3}
@@ -5498,11 +5477,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Slime
-      objectReference: {fileID: 0}
-    - target: {fileID: 361026374588217000, guid: aa07f1df184d88f4fab2542219aff693,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 361026374588217002, guid: aa07f1df184d88f4fab2542219aff693,
         type: 3}
@@ -6033,12 +6007,17 @@ PrefabInstance:
     - target: {fileID: 9125608888302341125, guid: f90c3b01347b7154c93f5c36108bead0,
         type: 3}
       propertyPath: speed
-      value: 26
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9125608888302341124, guid: f90c3b01347b7154c93f5c36108bead0,
         type: 3}
       propertyPath: m_LinearDrag
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9125608888302341124, guid: f90c3b01347b7154c93f5c36108bead0,
+        type: 3}
+      propertyPath: m_Mass
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f90c3b01347b7154c93f5c36108bead0, type: 3}

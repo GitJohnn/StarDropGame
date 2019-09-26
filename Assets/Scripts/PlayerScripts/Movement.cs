@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
     float health;
     float stamina;
     float knockTime = .2f;
-    float dashTime = .4f;
+    float dashTime = .2f;
     float dashSpeed = 13f;
     Vector3 dashDir;
     public bool isJumping = false;
@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        SPEED = speed; //never change SPEED
+        SPEED = speed;
         stamina = maxStamina;
         health = maxHealth;
         GameOver = false;
@@ -37,11 +37,11 @@ public class Movement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (!knockedOrDash & !isJumping)
         {
-            myRB.AddForce(moveVelocity);
+            myRB.velocity = moveVelocity;
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 isJumping = true;
@@ -50,14 +50,14 @@ public class Movement : MonoBehaviour
             GetInput();
             Dash(dashDir);
         }
-        UpdateStamin();
+        UpdateStamina();
     }
 
-    void UpdateStamin()
+    void UpdateStamina()
     {
         if (stamina < maxStamina)
         {
-            stamina += Time.deltaTime;
+            stamina += Time.deltaTime * 1f;
         }
         else if (stamina > maxStamina)
         {
@@ -86,7 +86,8 @@ public class Movement : MonoBehaviour
         {
             stamina -= staminaCostofDash;
             dir = GameObject.Find("stem").GetComponent<Transform>().transform.right;
-            myRB.AddForce(dir * dashSpeed, ForceMode2D.Impulse);
+            knockedOrDash = true;
+            myRB.velocity += (Vector2)dir.normalized * dashSpeed;
             StartCoroutine(KnockBackAndDash(dashTime));
         }
 
@@ -94,7 +95,7 @@ public class Movement : MonoBehaviour
         {
             stamina -= staminaCostofDash;
             knockedOrDash = true;
-            myRB.AddForce(dir * dashSpeed, ForceMode2D.Impulse);
+            myRB.velocity += (Vector2)dir.normalized * dashSpeed;
             StartCoroutine(KnockBackAndDash(dashTime));
         }
     }
@@ -128,7 +129,7 @@ public class Movement : MonoBehaviour
         knockedOrDash = true;
         myRB.velocity = Vector3.zero;
         Vector3 direction = Vector3.Normalize(transform.position - position);
-        myRB.AddForce(direction * knockBackForce, ForceMode2D.Impulse);
+        myRB.velocity += (Vector2)direction.normalized * knockBackForce;
         StartCoroutine(KnockBackAndDash(knockTime));
     }
 

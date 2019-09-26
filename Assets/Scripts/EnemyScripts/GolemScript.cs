@@ -24,7 +24,7 @@ public class GolemScript : MonoBehaviour
 
     public void Attack(GameObject player, float attackDis, float stopDis, Rigidbody2D golemRB)
     {
-        distance = DistanceToPlayer(player);
+        distance = Vector3.Distance(transform.position, player.transform.position);
         if (timeAttack >= startTimeAttack && (distance <= attackDis) && (distance >= stopDis) && !isAttacking)
         {
             //We make a Boulder attack;
@@ -40,12 +40,6 @@ public class GolemScript : MonoBehaviour
         {
             timeAttack += Time.deltaTime;
         }
-    }
-
-    float DistanceToPlayer(GameObject target)
-    {
-        float temp = Vector3.Distance(transform.position, target.transform.position);
-        return temp;
     }
 
     IEnumerator BolderThrowDelay(float time, Rigidbody2D golemRB)

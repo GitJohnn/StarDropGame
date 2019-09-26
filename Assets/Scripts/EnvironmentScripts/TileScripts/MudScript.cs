@@ -19,7 +19,6 @@ public class MudScript : MonoBehaviour
 
         if (other.tag.Equals("Enemy"))
         {
-            Debug.Log("Eemy entered mud");
             enemyOriginalSpeed = other.GetComponent<EnemyAI>().Speed;
             other.GetComponent<EnemyAI>().Speed /= mudStickyness;
         }

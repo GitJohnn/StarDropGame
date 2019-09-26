@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 6959867881122505661}
   - component: {fileID: 5584449888438659803}
   - component: {fileID: 6959867881122505656}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Golem
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -282,9 +282,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51bc755b0ab08cb4eb8b8e9f91f19cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAttack: 1
+  player: {fileID: 0}
+  useDefaultMovement: 1
   health: 100
-  speed: 240
+  speed: 500
   nextWaypointDistance: 0.1
   target: {x: 0, y: 0}
   homePoint: {x: 0.35, y: 1.51, z: 0}
@@ -369,7 +370,7 @@ MonoBehaviour:
   draggable: 1
   speed: 10
   startTimeDistance: 0.5
-  weight: 0
+  weight: 25
   durability: 0
   damage: 50
 --- !u!50 &6959867881122505656
