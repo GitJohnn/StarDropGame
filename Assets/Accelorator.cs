@@ -14,10 +14,10 @@ public class Accelorator : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D other) {
         if (other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping) {
             player = other.GetComponent<Movement>();
-            if (player.speed == player.SPEED) {
+            if (player.CurrentSpeed == player.SPEED) {
                 elapsedTime = 0;
-                originalSpeed = other.GetComponent<Movement>().speed;
-                other.GetComponent<Movement>().speed *= speedMultiplier;
+                originalSpeed = other.GetComponent<Movement>().CurrentSpeed;
+                other.GetComponent<Movement>().CurrentSpeed *= speedMultiplier;
             }
         }
     }
@@ -29,7 +29,7 @@ public class Accelorator : MonoBehaviour {
     private void Update() {
         if (elapsedTime >= boostEffectLasting) {
             if (player != null) {
-                player.speed = player.SPEED;
+                player.CurrentSpeed = player.SPEED;
             }
         } else {
             elapsedTime += Time.deltaTime;

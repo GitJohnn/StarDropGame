@@ -13,8 +13,8 @@ public class MudScript : MonoBehaviour
     {
         if (other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping)
         {
-            originalSpeed = other.GetComponent<Movement>().speed;
-            other.GetComponent<Movement>().speed /= mudStickyness;
+            originalSpeed = other.GetComponent<Movement>().CurrentSpeed;
+            other.GetComponent<Movement>().CurrentSpeed /= mudStickyness;
         }
 
         if (other.tag.Equals("Enemy"))
@@ -28,7 +28,7 @@ public class MudScript : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
-            other.GetComponent<Movement>().speed = originalSpeed;
+            other.GetComponent<Movement>().CurrentSpeed = originalSpeed;
         }
 
         if (other.tag.Equals("Enemy"))

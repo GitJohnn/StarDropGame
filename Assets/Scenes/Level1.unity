@@ -6009,6 +6009,16 @@ PrefabInstance:
       propertyPath: speed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 9125608888302341125, guid: f90c3b01347b7154c93f5c36108bead0,
+        type: 3}
+      propertyPath: baseSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9125608888302341125, guid: f90c3b01347b7154c93f5c36108bead0,
+        type: 3}
+      propertyPath: modSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9125608888302341124, guid: f90c3b01347b7154c93f5c36108bead0,
         type: 3}
       propertyPath: m_LinearDrag

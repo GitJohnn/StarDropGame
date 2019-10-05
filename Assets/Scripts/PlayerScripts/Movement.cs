@@ -10,11 +10,13 @@ public class Movement : MonoBehaviour
     Vector3 moveVelocity;
 
     public float airTime;
-    public float speed;
     public float SPEED;
     public float maxStamina = 100f;
     public float maxHealth = 100f;
     public float staminaCostofDash = 7.5f;
+    public float baseSpeed;
+    public float modSpeed;
+    float currentSpeed;
     float health;
     float stamina;
     float knockTime = .2f;
@@ -28,7 +30,8 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        SPEED = speed;
+        currentSpeed = modSpeed + baseSpeed;
+        SPEED = currentSpeed;
         stamina = maxStamina;
         health = maxHealth;
         GameOver = false;
@@ -69,7 +72,7 @@ public class Movement : MonoBehaviour
     {
         Vector3 moveTowards = new Vector3(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical") ,0f);
         dashDir = moveTowards;
-        moveVelocity = moveTowards.normalized * speed;
+        moveVelocity = moveTowards.normalized * currentSpeed;
     }
 
     void Jump()
@@ -122,6 +125,12 @@ public class Movement : MonoBehaviour
     {
         get { return stamina; }
         set { stamina = value; }
+    }
+
+    public float CurrentSpeed
+    {
+        get { return currentSpeed; }
+        set { currentSpeed = value; }
     }
 
     public void takeKnockBack(Vector3 position, float knockBackForce)
