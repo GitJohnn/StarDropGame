@@ -16,6 +16,7 @@ public class Grabber : MonoBehaviour
     float grip;
     bool soreHands = false;
     bool canGrab = true;
+    float originalDurability;
     float startTimeDelay = 0.1f;
     float timeDelay = 0f;
     private BoxCollider2D grabber;
@@ -55,7 +56,6 @@ public class Grabber : MonoBehaviour
                         d.transform.SetParent(this.transform.parent);
                         d.transform.position = this.transform.position;
                         Debug.Log(d.transform.name + " is Grabbed");
-                        //d.gameObject.layer = 0;
                         d.transform.rotation = Quaternion.identity;
                         hldObj = true;
                         canShoot = false;
@@ -75,6 +75,7 @@ public class Grabber : MonoBehaviour
                     d.transform.position = this.transform.position;
                     d.gameObject.layer = 0;
                     d.transform.rotation = this.transform.rotation;
+                    originalDurability = d.durability;
                     hldObj = true;
                     canShoot = false;
                     canGrab = false;
@@ -101,6 +102,11 @@ public class Grabber : MonoBehaviour
             // check if the object is destroyed while being held special of Obstacles
             if (d.tag.Equals("Obstacle") && hldObj)
             {
+                if(d.durability < originalDurability)
+                {
+                    originalDurability = d.durability;
+                    grip -= maxGrip / 4f;
+                }
                 if (d.durability <= 0)
                 {
                     d = null;

@@ -58,12 +58,13 @@ public class Draggable : MonoBehaviour
         }
     }
 
-    void PushObj(Collision2D actObj)
-    {
-        Vector2 pushDir = actObj.transform.position - transform.position;
-        myRB.velocity = Vector3.zero;
-        myRB.velocity += pushDir.normalized * 5f;
-    }
+    //not used anymore,  crates won't move because scanning area makes game slow down.
+    //void PushObj(Collision2D actObj)
+    //{
+    //    Vector2 pushDir = actObj.transform.position - transform.position;
+    //    myRB.velocity = Vector3.zero;
+    //    myRB.velocity += pushDir.normalized * 5f;
+    //}
 
     public void ShootObj(bool travel, Vector2 direction, AstarPath scan)
     {
