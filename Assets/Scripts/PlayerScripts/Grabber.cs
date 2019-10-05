@@ -174,8 +174,8 @@ public class Grabber : MonoBehaviour
             }
             else if(d.tag.Equals("Obstacle"))
             {
-                path.Scan();
                 d.gameObject.layer = 8;
+                path.Scan();
             }
             //we detach the object
             d.transform.parent = null;
@@ -191,13 +191,11 @@ public class Grabber : MonoBehaviour
             {
                 d.gameObject.layer = 8;
             }
-            //is being dragged variable is used for enemies to stop shooting.
             d.transform.parent = null;
             d.transform.rotation = Quaternion.identity;
             hldObj = false;
             canShoot = true;
             StartCoroutine(canGrabAgain(waitTimeToGrab));
-            //Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - this.transform.position;
             d.ShootObj(true, shootDir.transform.right , path);
             d = null;
         }
@@ -223,7 +221,6 @@ public class Grabber : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //Debug.Log(collision.transform.name);
         canShoot = true;
     }
 

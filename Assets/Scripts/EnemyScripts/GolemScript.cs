@@ -34,7 +34,6 @@ public class GolemScript : MonoBehaviour
         {
             //make the Stomp attack
             StartCoroutine(StompingDelay(stompAttackDelay,stopDis,golemRB));
-            Debug.Log("stomp begin");
         }
         else if(!isAttacking)
         {

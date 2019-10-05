@@ -37,7 +37,7 @@ public class Draggable : MonoBehaviour
         if (transform.tag.Equals("Obstacle"))
         {
             destroyObj();
-            CheckVelocity();
+            //CheckVelocity();
         }
     }
 
@@ -107,7 +107,7 @@ public class Draggable : MonoBehaviour
         //push crates.
         if (collision.transform.tag.Equals("Player") && transform.tag.Equals("Obstacle"))
         {
-            PushObj(collision);
+            //PushObj(collision);
         }
     }
 
