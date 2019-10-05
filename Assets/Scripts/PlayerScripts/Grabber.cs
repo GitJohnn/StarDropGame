@@ -74,7 +74,7 @@ public class Grabber : MonoBehaviour
                     d.transform.SetParent(this.transform.parent);
                     d.transform.position = this.transform.position;
                     d.gameObject.layer = 0;
-                    d.transform.rotation = Quaternion.identity;
+                    d.transform.rotation = this.transform.rotation;
                     hldObj = true;
                     canShoot = false;
                     canGrab = false;
