@@ -7,7 +7,7 @@ using System;
 public class EnemyAI : MonoBehaviour {
 
     public GameObject player;
-    Seeker seeker;
+    public Seeker seeker;
     Rigidbody2D rb;
     GameManager manager;
 
@@ -108,7 +108,7 @@ public class EnemyAI : MonoBehaviour {
 
 
     //Moves Along Path
-    private void FollowPath() {
+    public void FollowPath() {
         if (path == null) //if the path doesn't exist, then exit update
             return;
 

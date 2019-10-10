@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class BullScript : MonoBehaviour {
     GameObject player;
@@ -8,16 +9,24 @@ public class BullScript : MonoBehaviour {
     Rigidbody2D rb;
 
     public float chargeTime;
+    public float waitTime;
     public float chargingSpeed = 20f;
     public float dmg = 20;
-    float timeElapsed;
+    float timeElapsedInRadius;
+    float timeElapsedNotInRadius;
     float stunTime = 0;
     float currentHealth = 0;
     bool isAttacking = false;
     bool startAttacking = false;
+    bool returnHome = false;
 
     Vector3 vectorDifference;
     Vector3 direction;
+
+    //For Moving
+    Path path;
+    int currentWaypoint = 0;
+    bool atEndOfPath = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -30,6 +39,21 @@ public class BullScript : MonoBehaviour {
         if (player == null) {
             player = AI.player;
         }
+
+        SetRigidbodyRestraints(!(isAttacking ^ returnHome));
+
+        if (!AI.isInAttackRaduis()) {
+            timeElapsedInRadius = 0;
+            timeElapsedNotInRadius += Time.deltaTime;
+        }
+        returnHome = timeElapsedNotInRadius >= waitTime;
+
+        if (returnHome) {
+            AI.FollowPath();
+        }
+        Debug.Log(returnHome);
+        Debug.Log(isAttacking);
+
     }
 
     public void Attack() {
@@ -37,12 +61,11 @@ public class BullScript : MonoBehaviour {
             stunTime -= Time.deltaTime;
         } else {
             if (AI.isInAttackRaduis()) {
-                timeElapsed += Time.deltaTime;
-            } else {
-                timeElapsed = 0;
+                timeElapsedInRadius += Time.deltaTime;
+                timeElapsedNotInRadius = 0;
             }
 
-            if (timeElapsed >= chargeTime && !isAttacking) {
+            if (timeElapsedInRadius >= chargeTime && !isAttacking) {
                 startAttacking = true;
             }
 
@@ -70,7 +93,7 @@ public class BullScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         isAttacking = false;
-        timeElapsed = 0f;
+        timeElapsedInRadius = 0f;
         rb.velocity = new Vector3();
         if (collision.gameObject == player) {
             player.GetComponent<Movement>().Damage(dmg);
@@ -78,6 +101,15 @@ public class BullScript : MonoBehaviour {
             stunTime = 3;
         }
         
+    }
+
+    //turns on and off rigidbody
+    void SetRigidbodyRestraints(bool b) {
+        if (b) {
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        } else {
+            rb.constraints = RigidbodyConstraints2D.None;
+        }
     }
     
 
