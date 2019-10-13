@@ -16,7 +16,7 @@ public class Draggable : MonoBehaviour
     Vector2 dir;
     AstarPath path;
     bool act = false;
-    float TimeDistance = 0f;
+    float timeDistance = 0f;
 
     private void Awake()
     {
@@ -37,15 +37,6 @@ public class Draggable : MonoBehaviour
         if (transform.tag.Equals("Obstacle"))
         {
             destroyObj();
-            //CheckVelocity();
-        }
-    }
-
-    void CheckVelocity()
-    {
-        if(myRB.velocity.magnitude > 3f)
-        {
-            path.Scan();
         }
     }
 
@@ -58,29 +49,21 @@ public class Draggable : MonoBehaviour
         }
     }
 
-    //not used anymore,  crates won't move because scanning area makes game slow down.
-    //void PushObj(Collision2D actObj)
-    //{
-    //    Vector2 pushDir = actObj.transform.position - transform.position;
-    //    myRB.velocity = Vector3.zero;
-    //    myRB.velocity += pushDir.normalized * 5f;
-    //}
-
     public void ShootObj(bool travel, Vector2 direction, AstarPath scan)
     {
         // here we make the object grabbed be thrown.
         act = travel;
         dir = direction;
         path = scan;
-        if (TimeDistance <= startTimeDistance)
+        if (timeDistance <= startTimeDistance)
         {
             // if we want to make the object bounce we need to change this.
-            this.transform.position += (Vector3)direction.normalized * speed * Time.deltaTime;
+            this.transform.position += (Vector3)direction * speed * Time.deltaTime;
         }
         else
         {
             act = false;
-            TimeDistance = 0;
+            timeDistance = 0;
             if (transform.tag.Equals("Obstacle"))
             {
                 path.Scan();
@@ -90,7 +73,7 @@ public class Draggable : MonoBehaviour
                 GetComponent<EnemyAI>().useDefaultMovement = true;
             }
         }
-        TimeDistance += Time.deltaTime;
+        timeDistance += Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -105,7 +88,7 @@ public class Draggable : MonoBehaviour
         {
             GetComponent<EnemyAI>().Damage(damage);
         }
-        //push crates.
+        //player and crates collision.
         if (collision.transform.tag.Equals("Player") && transform.tag.Equals("Obstacle"))
         {
             //PushObj(collision);

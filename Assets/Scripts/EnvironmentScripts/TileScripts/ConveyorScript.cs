@@ -18,7 +18,6 @@ public class ConveyorScript : MonoBehaviour
             for(int i = 0; i < overlappingObj.Count; i++)
             {
                 overlappingObj[i].position += (Vector3)dir.normalized * Time.deltaTime * conveyorSpeed;
-                Debug.Log(overlappingObj.Count);
             }
         }
     }

@@ -4,35 +4,30 @@ using UnityEngine;
 
 public class Accelorator : MonoBehaviour {
 
-    [SerializeField] float boostEffectLasting;
+    [SerializeField] float effectTiming;
     [SerializeField] float speedMultiplier;
     float originalSpeed;
     float elapsedTime = 0;
+    bool isAffected = false;
     Movement player;
 
 
-    private void OnTriggerStay2D(Collider2D other) {
-        if (other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping) {
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping && !isAffected) {
             player = other.GetComponent<Movement>();
-            if (player.CurrentSpeed == player.SPEED) {
-                elapsedTime = 0;
-                originalSpeed = other.GetComponent<Movement>().CurrentSpeed;
-                other.GetComponent<Movement>().CurrentSpeed *= speedMultiplier;
-            }
+            originalSpeed = player.modSpeed;
+            player.modSpeed *= speedMultiplier;
+            Debug.Log(player.modSpeed);
+            isAffected = true;
+            StartCoroutine(BoostEffect(effectTiming));
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
-        elapsedTime = 0;
+    IEnumerator BoostEffect(float time)
+    {
+        yield return new WaitForSeconds(time);
+        player.modSpeed = originalSpeed;
+        isAffected = false;
     }
 
-    private void Update() {
-        if (elapsedTime >= boostEffectLasting) {
-            if (player != null) {
-                player.CurrentSpeed = player.SPEED;
-            }
-        } else {
-            elapsedTime += Time.deltaTime;
-        }
-    }
 }

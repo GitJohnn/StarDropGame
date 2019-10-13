@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else if(!manager.isPaused)
+        else if(!manager.IsPaused)
         {
             timeDestroy += Time.deltaTime;
         }

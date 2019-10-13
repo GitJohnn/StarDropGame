@@ -6,20 +6,20 @@ public class Shooting : MonoBehaviour
 {
     public GameObject bullet;
     public Transform shotPos;
-    GameManager isPaused;
+    GameManager manager;
     //short for grabber
     Grabber grabObj;
 
     private void Awake()
     {
-        isPaused = GameObject.Find("Manager").GetComponent<GameManager>();
+        manager = GameObject.Find("Manager").GetComponent<GameManager>();
         grabObj = GameObject.FindGameObjectWithTag("Grabber").GetComponent<Grabber>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isPaused.PausePanel.activeInHierarchy)
+        if (!manager.IsPaused && !manager.IsGameOver)
         {
             RotateArm();
             Shoot();

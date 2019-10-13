@@ -8,9 +8,9 @@ public class Movement : MonoBehaviour
     Rigidbody2D myRB;
     GameObject player;
     Vector3 moveVelocity;
+    Vector3 moveTowards;
 
     public float airTime;
-    public float SPEED;
     public float maxStamina = 100f;
     public float maxHealth = 100f;
     public float staminaCostofDash = 7.5f;
@@ -25,16 +25,12 @@ public class Movement : MonoBehaviour
     Vector3 dashDir;
     public bool isJumping = false;
     bool knockedOrDash;
-    bool GameOver;
 
     // Start is called before the first frame update
     void Awake()
     {
-        currentSpeed = modSpeed + baseSpeed;
-        SPEED = currentSpeed;
         stamina = maxStamina;
         health = maxHealth;
-        GameOver = false;
         myRB = GetComponent<Rigidbody2D>();
         player = this.gameObject;
     }
@@ -54,6 +50,8 @@ public class Movement : MonoBehaviour
             Dash(dashDir);
         }
         UpdateStamina();
+        //UpdateSpeed
+        currentSpeed = modSpeed + baseSpeed;
     }
 
     void UpdateStamina()
@@ -70,7 +68,7 @@ public class Movement : MonoBehaviour
 
     void GetInput()
     {
-        Vector3 moveTowards = new Vector3(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical") ,0f);
+        moveTowards = new Vector3(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical") ,0f);
         dashDir = moveTowards;
         moveVelocity = moveTowards.normalized * currentSpeed;
     }
@@ -105,14 +103,20 @@ public class Movement : MonoBehaviour
 
     public void Damage(float dmg)
     {
-        if(health > 0)
+        if(health > 0f)
         {
             health -= dmg;
         }
-        else if (health == 0)
+        else if (health <= 0f && GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>().IsGameOver)
         {
-            GameOver = true;
+            //We need to stop the player from moving
+            this.enabled = false;
         }
+    }
+
+    public Vector3 MoveDirection
+    {
+        get { return moveTowards.normalized; }
     }
 
     public float Health
@@ -130,7 +134,6 @@ public class Movement : MonoBehaviour
     public float CurrentSpeed
     {
         get { return currentSpeed; }
-        set { currentSpeed = value; }
     }
 
     public void takeKnockBack(Vector3 position, float knockBackForce)

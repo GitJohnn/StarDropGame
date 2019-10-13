@@ -6,17 +6,20 @@ public class SlimeScript : MonoBehaviour
 {
     CircleCollider2D thorns;
     Rigidbody2D slimeRB;
+    Grabber playerGrab;
 
     public float dmg;
     public float startTimeAttack;
     public float slimeKnockback;
     public float delay;
+    bool isAttacking;
     float timeAttack = 0;
     bool isColliding = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerGrab = GameObject.FindGameObjectWithTag("Grabber").GetComponent<Grabber>();
         thorns = GetComponent<CircleCollider2D>();
         slimeRB = GetComponent<Rigidbody2D>();
     }
@@ -30,7 +33,7 @@ public class SlimeScript : MonoBehaviour
             StartCoroutine(AttackDelay(delay));
             timeAttack = 0;
         }
-        else
+        else if(!isAttacking && !playerGrab.HldObj)
         {
             timeAttack += Time.deltaTime;
         }

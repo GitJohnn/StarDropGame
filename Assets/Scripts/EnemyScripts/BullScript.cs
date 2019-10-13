@@ -10,8 +10,9 @@ public class BullScript : MonoBehaviour {
 
     public float chargeTime;
     public float waitTime;
-    public float chargingSpeed = 20f;
+    public float chargingSpeed = 1.4f;
     public float dmg = 20;
+    public float chargeKnockback = 3f;
     float timeElapsedInRadius;
     float timeElapsedNotInRadius;
     float stunTime = 0;
@@ -47,13 +48,9 @@ public class BullScript : MonoBehaviour {
             timeElapsedNotInRadius += Time.deltaTime;
         }
         returnHome = timeElapsedNotInRadius >= waitTime;
-
         if (returnHome) {
             AI.FollowPath();
         }
-        Debug.Log(returnHome);
-        Debug.Log(isAttacking);
-
     }
 
     public void Attack() {
@@ -88,7 +85,11 @@ public class BullScript : MonoBehaviour {
     }
 
     void ChargingForward() {
-        rb.AddForce(new Vector2(direction.x, direction.y) * chargingSpeed);
+        if(rb.velocity.magnitude < 5f)
+        {
+            rb.velocity += (Vector2)direction * chargingSpeed;
+        }
+            
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -97,6 +98,7 @@ public class BullScript : MonoBehaviour {
         rb.velocity = new Vector3();
         if (collision.gameObject == player) {
             player.GetComponent<Movement>().Damage(dmg);
+            player.GetComponent<Movement>().takeKnockBack(transform.position, chargeKnockback);
         } else {
             stunTime = 3;
         }
@@ -109,6 +111,7 @@ public class BullScript : MonoBehaviour {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         } else {
             rb.constraints = RigidbodyConstraints2D.None;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
     

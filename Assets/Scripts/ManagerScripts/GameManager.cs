@@ -1,11 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject PausePanel;
-    public bool isPaused = false;
+    public GameObject GameOverPanel;
+    public GameObject[] GamePanelChilds;
+    Animator Panel;
+    bool isPaused = false;
+    bool isGameOver = false;
+
+    public bool IsPaused
+    {
+        get
+        {
+            return isPaused;
+        }
+    }
+    public bool IsGameOver
+    {
+        get
+        {
+            return isGameOver;
+        }
+    }
+
+    private void Awake()
+    {
+        PausePanel.SetActive(false);
+        StartNewGame();
+    }
 
     // Update is called once per frame
     void Update()
@@ -14,6 +42,37 @@ public class GameManager : MonoBehaviour
         {
             PausePanelActivate();
         }
+        if(GameObject.FindGameObjectWithTag("Player").GetComponent<Movement>().Health <= 0)
+        {
+            GameOverActivate();
+            RetryLevel();
+        }
+    }
+
+    void StartNewGame()
+    {
+        GameOverPanel.SetActive(true);
+        Panel = GameOverPanel.GetComponent<Animator>();
+        Panel.SetBool("Fade", false);
+        foreach (GameObject child in GamePanelChilds)
+        {
+            child.SetActive(false);
+        }
+    }
+
+    public void GameOverActivate()
+    {
+        if (GameOverPanel.activeInHierarchy && !isGameOver)
+        {
+            isGameOver = true;
+            Panel.SetBool("Fade",true);
+            foreach (GameObject child in GamePanelChilds)
+            {
+                child.SetActive(true);
+            }
+            Rigidbody2D[] obj = GameObject.FindObjectsOfType<Rigidbody2D>();
+            Deactivate(obj);
+        }        
     }
 
     public void PausePanelActivate()
@@ -25,10 +84,6 @@ public class GameManager : MonoBehaviour
             Rigidbody2D[] obj = GameObject.FindObjectsOfType<Rigidbody2D>();
             Deactivate(obj);
         }
-        else
-        {
-            Debug.Log("There is no Pause Panel");
-        }
     }
 
     void Deactivate(Rigidbody2D[] RBArray)
@@ -36,7 +91,7 @@ public class GameManager : MonoBehaviour
         foreach(Rigidbody2D rb in RBArray)
         {
             if(rb.bodyType != RigidbodyType2D.Static)
-                rb.constraints = RigidbodyConstraints2D.FreezePosition;
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
 
@@ -51,6 +106,16 @@ public class GameManager : MonoBehaviour
                     rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
+    }
+
+    void RetryLevel()
+    {
+        if (Panel.GetBool("Fade") && !Panel.IsInTransition(0) && isGameOver && Input.anyKeyDown)
+        {
+            Debug.Log("Reseting Level");
+            SceneManager.LoadScene(1);
+        }
+        
     }
 
     public void ResumeBtn()

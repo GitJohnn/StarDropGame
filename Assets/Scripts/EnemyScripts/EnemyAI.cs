@@ -71,7 +71,7 @@ public class EnemyAI : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-        if (attackRadius >= distanceToPlayer && !manager.isPaused) {
+        if (attackRadius >= distanceToPlayer && !manager.IsPaused && !manager.IsGameOver) {
             
             //rotates enemy to look at player
             LookAtPlayer();

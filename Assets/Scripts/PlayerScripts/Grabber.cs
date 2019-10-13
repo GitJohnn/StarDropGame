@@ -6,14 +6,14 @@ using Pathfinding;
 public class Grabber : MonoBehaviour
 {
     public bool canShoot = true;
-    public bool hldObj = false;
     public float timeToShoot = 0.3f;
     public float raycastSize = 1f;
     public float shootPower = 4f;
     public float maxGrip = 3f;
-    public float waitTimeToGrab = .25f;
+    public float waitTime = .25f;
 
     float grip;
+    bool hldObj = false;
     bool soreHands = false;
     bool canGrab = true;
     float originalDurability;
@@ -96,7 +96,7 @@ public class Grabber : MonoBehaviour
                     d = null;
                     hldObj = false;
                     canShoot = true;
-                    StartCoroutine(canGrabAgain(waitTimeToGrab));
+                    StartCoroutine(canGrabAgain(waitTime));
                 }
             }
             // check if the object is destroyed while being held special of Obstacles
@@ -112,7 +112,7 @@ public class Grabber : MonoBehaviour
                     d = null;
                     hldObj = false;
                     canShoot = true;
-                    StartCoroutine(canGrabAgain(waitTimeToGrab));
+                    StartCoroutine(canGrabAgain(waitTime));
                 }
             }
             //to keep the object at the grabbers location
@@ -186,9 +186,9 @@ public class Grabber : MonoBehaviour
             //we detach the object
             d.transform.parent = null;
             d.transform.rotation = Quaternion.identity;
+            StartCoroutine(canGrabAgain(waitTime));
+            StartCoroutine(canShootAgain(waitTime));
             hldObj = false;
-            canShoot = true;
-            StartCoroutine(canGrabAgain(waitTimeToGrab));
             d = null;
         }
         else if (Input.GetMouseButtonDown(0) && hldObj)
@@ -198,16 +198,24 @@ public class Grabber : MonoBehaviour
                 d.gameObject.layer = 8;
             }
             d.transform.parent = null;
-            d.transform.rotation = Quaternion.identity;
-            hldObj = false;
-            canShoot = true;
-            StartCoroutine(canGrabAgain(waitTimeToGrab));
-            d.ShootObj(true, shootDir.transform.right , path);
+            d.transform.rotation = Quaternion.identity;            
+            d.ShootObj(true, shootDir.transform.right, path);
+            StartCoroutine(canGrabAgain(waitTime));
+            StartCoroutine(canShootAgain(waitTime));
+            hldObj = false;            
             d = null;
         }
         else
         {
             timeDelay += Time.deltaTime;
+        }
+    }
+
+    public bool HldObj
+    {
+        get
+        {
+            return hldObj;
         }
     }
 
@@ -227,6 +235,12 @@ public class Grabber : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        canShoot = true;
+    }
+
+    IEnumerator canShootAgain(float time)
+    {
+        yield return new WaitForSeconds(time);
         canShoot = true;
     }
 

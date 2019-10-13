@@ -17,10 +17,16 @@ public class GolemScript : MonoBehaviour
     public float startTimeAttack;
     public float bolderAttackDelay;
     public float stompAttackDelay;
-    public LayerMask stompVictims;
+    Grabber playerGrab;
+    LayerMask stompVictims = 9;
     bool isAttacking = false;
     float timeAttack;
     float distance;
+
+    private void Awake()
+    {
+        playerGrab = GameObject.FindGameObjectWithTag("Grabber").GetComponent<Grabber>();
+    }
 
     public void Attack(GameObject player, float attackDis, float stopDis, Rigidbody2D golemRB)
     {
@@ -35,7 +41,7 @@ public class GolemScript : MonoBehaviour
             //make the Stomp attack
             StartCoroutine(StompingDelay(stompAttackDelay,stopDis,golemRB));
         }
-        else if(!isAttacking)
+        else if(!isAttacking && !playerGrab.HldObj)
         {
             timeAttack += Time.deltaTime;
         }
@@ -46,8 +52,8 @@ public class GolemScript : MonoBehaviour
         isAttacking = true;
         golemRB.constraints = RigidbodyConstraints2D.FreezePosition;
         yield return new WaitForSeconds(time);
-        isAttacking = false;
         Instantiate(bullet, bulletSpawn.transform.position, transform.rotation);
+        isAttacking = false;
         timeAttack = 0;
         golemRB.constraints = RigidbodyConstraints2D.None;
     }
@@ -58,7 +64,7 @@ public class GolemScript : MonoBehaviour
         golemRB.constraints = RigidbodyConstraints2D.FreezePosition;
         RaycastHit2D[] sphereInfo = Physics2D.CircleCastAll(transform.position, stompRadius, -Vector2.up, stompRadius * 2, stompVictims);
         //check if we hitplayer
-        Debug.Log("Stomp hit " + sphereInfo.Length + " enemies");
+        //Debug.Log("Stomp hit " + sphereInfo.Length + " enemies");
         foreach (RaycastHit2D ray in sphereInfo)
         {
             if (ray.collider.tag.Equals("Player") && !ray.transform.GetComponent<Movement>().isJumping)
