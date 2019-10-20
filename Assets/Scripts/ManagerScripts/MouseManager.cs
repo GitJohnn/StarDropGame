@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class MouseManager : MonoBehaviour
 {
+    public Texture2D mouseSprite;
+    public Vector2 hotSpot = Vector2.zero;
+    public CursorMode cursorMode = CursorMode.Auto;
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
+        Cursor.SetCursor(mouseSprite, hotSpot, cursorMode);
     }
 }

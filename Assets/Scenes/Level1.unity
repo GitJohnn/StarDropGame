@@ -7246,11 +7246,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564627181}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdd6f36aebc4be34c84bbc5a8092728d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mouseSprite: {fileID: 2800000, guid: 6579e61e13dcfb5499dd88cc520d4be6, type: 3}
+  hotSpot: {x: 0, y: 0}
+  cursorMode: 0
 --- !u!1001 &1572807551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10414,6 +10417,16 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2022970248}
+    - target: {fileID: 4546901937216568183, guid: d2a367a389e310c4ab05f160d0d79826,
+        type: 3}
+      propertyPath: chaseRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546901937216568183, guid: d2a367a389e310c4ab05f160d0d79826,
+        type: 3}
+      propertyPath: attackRadius
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2a367a389e310c4ab05f160d0d79826, type: 3}
 --- !u!1001 &3157567030200045753

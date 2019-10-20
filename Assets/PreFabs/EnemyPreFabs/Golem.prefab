@@ -301,8 +301,8 @@ MonoBehaviour:
   speed: 500
   nextWaypointDistance: 0.1
   target: {x: 0, y: 0}
-  chaseRadius: 5.3
-  attackRadius: 4.4
+  chaseRadius: 8
+  attackRadius: 7
   stopRadius: 2
   player: {fileID: 0}
   seeker: {fileID: 6959867881122505661}
