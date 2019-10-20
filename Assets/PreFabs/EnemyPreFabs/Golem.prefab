@@ -203,13 +203,44 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1474933858}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.85, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
+  m_Father: {fileID: 1040445649471066608}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1896640470607147414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1040445649471066608}
+  m_Layer: 10
+  m_Name: BolderSpawnPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1040445649471066608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896640470607147414}
+  m_LocalRotation: {x: 0, y: -0, z: 0.69277287, w: -0.7211558}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1474933859}
   m_Father: {fileID: 6959867881122505659}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 272.3}
 --- !u!1 &6959867881122505657
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,12 +250,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6959867881122505659}
-  - component: {fileID: 6959867881122505660}
   - component: {fileID: 6959867881122505658}
   - component: {fileID: 3455178348729135124}
   - component: {fileID: 6959867881122505661}
   - component: {fileID: 5584449888438659803}
   - component: {fileID: 6959867881122505656}
+  - component: {fileID: 1989158839}
   m_Layer: 10
   m_Name: Golem
   m_TagString: Enemy
@@ -244,7 +275,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6959867881766566779}
-  - {fileID: 1474933859}
+  - {fileID: 1040445649471066608}
   - {fileID: 186322575}
   - {fileID: 1302922318}
   - {fileID: 257831421}
@@ -254,22 +285,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &6959867881122505660
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6959867881122505657}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &6959867881122505658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,16 +297,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51bc755b0ab08cb4eb8b8e9f91f19cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  useDefaultMovement: 1
   health: 100
   speed: 500
   nextWaypointDistance: 0.1
   target: {x: 0, y: 0}
-  homePoint: {x: 0.35, y: 1.51, z: 0}
   chaseRadius: 5.3
   attackRadius: 4.4
   stopRadius: 2
+  player: {fileID: 0}
+  seeker: {fileID: 6959867881122505661}
+  useDefaultMovement: 1
 --- !u!114 &3455178348729135124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7cb8618ddf3ba34ebd99ff19e4c6ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canThrowBoulder: 1
+  canStomp: 1
   bullet: {fileID: 1775144612096309478, guid: e4181311b87e48d4ca326c6a9f21b7e3, type: 3}
   bulletSpawn: {fileID: 1474933858}
   stompGolemBullet: {fileID: 2962581082706320930, guid: fb14fc13e211a654d9cc795d976bef1a,
@@ -322,11 +339,8 @@ MonoBehaviour:
   stompKnockback: 5
   thornKnockback: 3
   startTimeAttack: 2
-  bolderAttackDelay: 0.45
-  stompAttackDelay: 0.8
-  stompVictims:
-    serializedVersion: 2
-    m_Bits: 512
+  bolderAttackDelay: 0.25
+  stompAttackDelay: 0.4
 --- !u!114 &6959867881122505661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +408,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!70 &1989158839
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6959867881122505657}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 5e98e0dcb2028554e9c5a48d6190e272, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.03, y: 0}
+  m_Size: {x: 0.89, y: 1.43}
+  m_Direction: 0
 --- !u!1 &6959867881766566776
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,9 +434,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6959867881766566779}
   - component: {fileID: 6959867881766566778}
-  m_Layer: 0
+  - component: {fileID: 355378119}
+  m_Layer: 10
   m_Name: GFX
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -463,8 +494,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b44c29f9a5f0dc3468dc3b1819506ca7, type: 3}
-  m_Color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c5129e6290f774e4f8b5e4b9fe0330b8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -474,3 +505,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &355378119
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6959867881766566776}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5bb353fccd59c5a43a41bdaf9def0b20, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

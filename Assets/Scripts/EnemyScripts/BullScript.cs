@@ -27,7 +27,6 @@ public class BullScript : MonoBehaviour {
     //For Moving
     Path path;
     int currentWaypoint = 0;
-    bool atEndOfPath = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -42,7 +41,7 @@ public class BullScript : MonoBehaviour {
         }
 
         SetRigidbodyRestraints(!(isAttacking ^ returnHome));
-
+        this.transform.rotation = AI.LookAtPlayer();
         if (!AI.isInAttackRaduis()) {
             timeElapsedInRadius = 0;
             timeElapsedNotInRadius += Time.deltaTime;

@@ -42,7 +42,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.8705883, g: 0.6666667, b: 0.53333336, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -142,7 +142,9 @@ GameObject:
   - component: {fileID: 9125608888302341178}
   - component: {fileID: 9125608888302341125}
   - component: {fileID: 9125608888302341124}
-  - component: {fileID: 9125608888302341126}
+  - component: {fileID: 2022970249}
+  - component: {fileID: 2022970250}
+  - component: {fileID: 9106934353978744432}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -208,9 +210,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b44c29f9a5f0dc3468dc3b1819506ca7, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 9c446e0ae38a1d74b84ee6a66357b28f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -233,7 +235,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   airTime: 2
-  SPEED: 6
   maxStamina: 100
   maxHealth: 100
   staminaCostofDash: 7.5
@@ -261,8 +262,39 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &9125608888302341126
-CircleCollider2D:
+--- !u!95 &2022970249
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9125608888302341177}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b35cd37fa10219f40aafc5dad3346876, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2022970250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9125608888302341177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5647d9c22a476de43ab8c91065fd754d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!70 &9106934353978744432
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -270,13 +302,13 @@ CircleCollider2D:
   m_GameObject: {fileID: 9125608888302341177}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5e98e0dcb2028554e9c5a48d6190e272, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Offset: {x: -0.02, y: -0.05}
+  m_Size: {x: 0.46, y: 0.95}
+  m_Direction: 0
 --- !u!1 &9125608888509480126
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +409,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 154267299d4373b47851ea07fe93d573, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -428,9 +460,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canShoot: 1
-  hldObj: 0
   timeToShoot: 0.3
   raycastSize: 1
   shootPower: 4
   maxGrip: 3
-  waitTimeToGrab: 0.25
+  waitTime: 0.25

@@ -5,10 +5,12 @@ public class PlayerAnimations : MonoBehaviour
     Animator anim;
     SpriteRenderer img;
     Movement player;
+    GameManager manager;
 
     // Start is called before the first frame update
     void Awake()
     {
+        manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
         anim = GetComponent<Animator>();
         player = GetComponent<Movement>();
         img = GetComponent<SpriteRenderer>();
@@ -17,7 +19,14 @@ public class PlayerAnimations : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateAnimation();
+        if (!manager.IsPaused)
+        {
+            UpdateAnimation();
+        }
+        else
+        {
+            anim.SetBool("Moving", false);
+        }
     }
 
     void UpdateAnimation()

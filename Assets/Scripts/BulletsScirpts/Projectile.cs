@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
 
     private void Awake()
     {
-        bulletParent = transform.parent;
+        bulletParent = this.transform.parent;
         manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
         myRB = GetComponent<Rigidbody2D>();
     }

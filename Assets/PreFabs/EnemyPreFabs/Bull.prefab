@@ -89,12 +89,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2805089682422222894}
-  - component: {fileID: 2805089682422222895}
   - component: {fileID: 2805089682422222892}
   - component: {fileID: 2805089682422222893}
   - component: {fileID: 2805089682422222890}
   - component: {fileID: 2805089682422222891}
   - component: {fileID: 2805089682422222888}
+  - component: {fileID: 1399816023}
   m_Layer: 10
   m_Name: Bull
   m_TagString: Enemy
@@ -117,22 +117,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &2805089682422222895
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2805089682422222889}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &2805089682422222892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,9 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51bc755b0ab08cb4eb8b8e9f91f19cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  seeker: {fileID: 2805089682422222890}
-  useDefaultMovement: 1
   health: 100
   speed: 500
   nextWaypointDistance: 0.1
@@ -156,6 +137,9 @@ MonoBehaviour:
   chaseRadius: 0
   attackRadius: 9
   stopRadius: 0
+  player: {fileID: 0}
+  seeker: {fileID: 2805089682422222890}
+  useDefaultMovement: 1
 --- !u!114 &2805089682422222893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,10 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6e6a87caf90584294237a3aa2b132d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeTime: 3
-  waitTime: 5
-  chargingSpeed: 20
+  chargeTime: 2
+  waitTime: 0.2
+  chargingSpeed: 15
   dmg: 20
+  chargeKnockback: 3
 --- !u!114 &2805089682422222890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,3 +224,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!70 &1399816023
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2805089682422222889}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.99, y: 0.99}
+  m_Direction: 0

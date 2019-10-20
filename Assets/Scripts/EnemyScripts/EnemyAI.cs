@@ -6,50 +6,57 @@ using System;
 
 public class EnemyAI : MonoBehaviour {
 
-    public GameObject player;
-    public Seeker seeker;
     Rigidbody2D rb;
     GameManager manager;
-
+    Animator slimeAnim;
     Draggable isdraggable;
-    public bool useDefaultMovement = true;
-
-    [SerializeField] float health = 100f;
-
-    [SerializeField] float speed;
-    [SerializeField] float nextWaypointDistance = .1f;
-
-    [SerializeField] Vector2 target;
-    Path path;
-    int currentWaypoint = 0;
-    bool atEndOfPath = false;
-
-    [SerializeField] Vector3 homePoint;
-    [SerializeField] float chaseRadius;
-    [SerializeField] float attackRadius;
-    [SerializeField] float stopRadius;
-    float distanceToPlayer;
-
     //attacking scripts
     SlimeScript slime = null;
     GolemScript golem = null;
     BullScript bull = null;
 
-    //To Do list
-    //knock should stop AI so that it seems less floaty
-    //wounder around home point
-    //circle player when attacking
-    //add multiple enemy AI options
-    //organize variable
+    [SerializeField] float health = 100f;
+    [SerializeField] float speed;
+    [SerializeField] float nextWaypointDistance = .1f;
+    [SerializeField] Vector2 target;
+    [SerializeField] float chaseRadius;
+    [SerializeField] float attackRadius;
+    [SerializeField] float stopRadius;
+
+    Path path;
+    Vector3 homePoint;
+    int currentWaypoint = 0;
+    bool atEndOfPath = false;
+    float distanceToPlayer;
+
+    public GameObject player;
+    public Seeker seeker;
+    public bool useDefaultMovement = true;
 
     // Start is called before the first frame update
     void Start() {
+        homePoint = this.transform.position;
+        if (this.gameObject.name.Contains("Slime"))
+        {
+            if (GetComponentInChildren<Animator>())
+            {
+                slimeAnim = GetComponentInChildren<Animator>();
+            }
+            slime = GetComponent<SlimeScript>();
+        }
+        else if (this.gameObject.name.Contains("Golem"))
+        {
+            golem = GetComponent<GolemScript>();
+        }
+        else if (this.gameObject.name.Contains("Bull"))
+        {
+            bull = GetComponent<BullScript>();
+        }
         player = GameObject.Find("Player");
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         isdraggable = GetComponent<Draggable>();
         manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
-
         target = homePoint;
         InvokeRepeating("UpdatePath", 0f, .05f); //Updates Path every 0.05 seconds
         UpdatePath();
@@ -72,19 +79,12 @@ public class EnemyAI : MonoBehaviour {
     void FixedUpdate() {
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         if (attackRadius >= distanceToPlayer && !manager.IsPaused && !manager.IsGameOver) {
-            
-            //rotates enemy to look at player
-            LookAtPlayer();
-
-            //set the enemyAIto use the script given.
-            if (GetComponent<SlimeScript>()) {
-                slime = GetComponent<SlimeScript>(); // PREFORMANCE: write this in start function to save memory/time
+            //set the enemyAI to use the script given.
+            if (slime) {
                 slime.Attack(player);
-            } else if (GetComponent<GolemScript>()) {
-                golem = GetComponent<GolemScript>();
+            } else if (golem) {
                 golem.Attack(player, attackRadius, stopRadius, rb);
-            } else if (GetComponent<BullScript>()) {
-                bull = GetComponent<BullScript>();
+            } else if (bull) {
                 bull.Attack();
             }
         }
@@ -99,11 +99,11 @@ public class EnemyAI : MonoBehaviour {
     }
 
     //Look Towards player
-    void LookAtPlayer()
+    public Quaternion LookAtPlayer()
     {
         Vector3 difference = player.transform.position - transform.position;
         float rotz = Mathf.Atan2(difference.y,difference.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, rotz);
+        return Quaternion.Euler(0f, 0f, rotz);
     }
 
 
@@ -141,7 +141,6 @@ public class EnemyAI : MonoBehaviour {
     }
 
     private void OnDrawGizmosSelected() {
-        Gizmos.DrawWireSphere(homePoint, .1f);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, chaseRadius);
         Gizmos.color = Color.black;
@@ -160,9 +159,14 @@ public class EnemyAI : MonoBehaviour {
 
     public void Damage(float dmg)
     {
-        if(health > 0f)
+        if (health > 0f)
         {
             health -= dmg;
+        }
+        //change animations
+        if (slime)
+        {
+            StartCoroutine(changeAnimator(slimeAnim));
         }
     }
 
@@ -197,5 +201,12 @@ public class EnemyAI : MonoBehaviour {
 
     public bool isInStopRaduis() {
         return (attackRadius >= distanceToPlayer);
+    }
+
+    IEnumerator changeAnimator(Animator anim)
+    {
+        anim.SetBool("isDmg", true);
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("isDmg", false);
     }
 }

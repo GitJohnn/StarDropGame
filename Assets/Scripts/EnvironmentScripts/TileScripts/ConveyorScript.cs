@@ -24,8 +24,25 @@ public class ConveyorScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag.Equals("Player") || collision.tag.Equals("Enemy") || collision.tag.Equals("Obstacle"))
+        if(collision.tag.Equals("Player"))
+        {
             overlappingObj.Add(collision.transform);
+        }
+
+        if (collision.GetComponent<Draggable>() && !collision.GetComponent<Draggable>().IsHeld)
+        {
+            overlappingObj.Add(collision.transform);
+        }
+            
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Draggable>() && !collision.GetComponent<Draggable>().IsHeld)
+        {
+            if(!overlappingObj.Contains(collision.transform))
+                overlappingObj.Add(collision.transform);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

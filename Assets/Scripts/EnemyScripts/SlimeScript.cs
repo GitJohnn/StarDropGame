@@ -8,6 +8,7 @@ public class SlimeScript : MonoBehaviour
     Rigidbody2D slimeRB;
     Grabber playerGrab;
 
+
     public float dmg;
     public float startTimeAttack;
     public float slimeKnockback;
@@ -41,9 +42,10 @@ public class SlimeScript : MonoBehaviour
 
     IEnumerator AttackDelay(float time)
     {
-        slimeRB.constraints = RigidbodyConstraints2D.FreezePosition;
+        slimeRB.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(time);
         slimeRB.constraints = RigidbodyConstraints2D.None;
+        slimeRB.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

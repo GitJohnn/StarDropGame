@@ -12,6 +12,7 @@ public class Draggable : MonoBehaviour
     public float durability;
     public float damage = 50f;
 
+    bool isHeld = false;
     Rigidbody2D myRB;
     Vector2 dir;
     AstarPath path;
@@ -88,10 +89,18 @@ public class Draggable : MonoBehaviour
         {
             GetComponent<EnemyAI>().Damage(damage);
         }
-        //player and crates collision.
-        if (collision.transform.tag.Equals("Player") && transform.tag.Equals("Obstacle"))
+    }
+
+    public bool IsHeld
+    {
+        get
         {
-            //PushObj(collision);
+            return isHeld;
+        }
+
+        set
+        {
+            isHeld = value;
         }
     }
 
