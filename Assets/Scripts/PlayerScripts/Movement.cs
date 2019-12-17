@@ -122,7 +122,17 @@ public class Movement : MonoBehaviour
     public float Health
     {
         get { return health; }
-        set { health = value; }
+        set
+        {
+            if(value + health > maxHealth)
+            {
+                health = maxHealth;
+            }
+            else
+            {
+                health += value;
+            }
+        }
     }
 
     public float Stamina
