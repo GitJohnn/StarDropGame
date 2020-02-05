@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
         WinPanel.SetActive(true);
         yield return new WaitForSeconds(2.45f);
         Deactivate();
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     IEnumerator FadeBegin()

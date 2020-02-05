@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class Movement : MonoBehaviour
     public bool isJumping = false;
     bool knockedOrDash;
 
+    //Control variables
+    PlayerControls controls;
+    Vector2 move;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,6 +38,12 @@ public class Movement : MonoBehaviour
         health = maxHealth;
         myRB = GetComponent<Rigidbody2D>();
         player = this.gameObject;
+
+        controls = new PlayerControls();
+        controls.Gameplay.Move_LS.performed += ctx => move = ctx.ReadValue<Vector2>();
+        controls.Gameplay.Move_LS.canceled += ctx => move = Vector2.zero;
+        controls.Gameplay.Jump.performed += ctx => Jump();
+        controls.Gameplay.Dash.performed += ctx => Dash(dashDir);
     }
 
     // Update is called once per frame
@@ -41,17 +52,22 @@ public class Movement : MonoBehaviour
         if (!knockedOrDash & !isJumping)
         {
             myRB.velocity = moveVelocity;
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                isJumping = true;
-                Jump();
-            }
+            //if (Input.GetKeyDown(KeyCode.Q))
+            //{
+            //    isJumping = true;
+            //    Jump();
+            //}
             GetInput();
-            Dash(dashDir);
+            //Dash(dashDir);
         }
         UpdateStamina();
         //UpdateSpeed
         currentSpeed = modSpeed + baseSpeed;
+    }
+
+    private void OnEnable()
+    {
+        controls.Gameplay.Enable();
     }
 
     void UpdateStamina()
@@ -68,36 +84,42 @@ public class Movement : MonoBehaviour
 
     void GetInput()
     {
-        moveTowards = new Vector3(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical") ,0f);
+        moveTowards = new Vector3(move.x, move.y ,0f);
         dashDir = moveTowards;
         moveVelocity = moveTowards.normalized * currentSpeed;
     }
 
     void Jump()
     {
-        //set velocity equal to zero.
-        myRB.constraints = RigidbodyConstraints2D.FreezeAll;
-        StartCoroutine(AirTime(airTime));
+        if (!knockedOrDash & !isJumping)
+        {
+            isJumping = true;
+            //set velocity equal to zero.
+            myRB.constraints = RigidbodyConstraints2D.FreezeAll;
+            StartCoroutine(AirTime(airTime));
+        }
     }
 
-    void Dash(Vector3 dir)
+    void Dash(Vector2 dir)
     {
-        //dash in mouse direction in case there is no movement
-        if(dir == Vector3.zero && Input.GetKeyDown(KeyCode.Space) && (stamina >= staminaCostofDash))
+        if (!knockedOrDash & !isJumping)
         {
-            stamina -= staminaCostofDash;
-            dir = GameObject.Find("stem").GetComponent<Transform>().transform.right;
-            knockedOrDash = true;
-            myRB.velocity += (Vector2)dir.normalized * dashSpeed;
-            StartCoroutine(KnockBackAndDash(dashTime));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && (stamina >= staminaCostofDash))
-        {
-            stamina -= staminaCostofDash;
-            knockedOrDash = true;
-            myRB.velocity += (Vector2)dir.normalized * dashSpeed;
-            StartCoroutine(KnockBackAndDash(dashTime));
+            //dash in mouse direction in case there is no movement
+            if (dir == Vector2.zero && (stamina >= staminaCostofDash))
+            {
+                stamina -= staminaCostofDash;
+                dir = GameObject.Find("stem").GetComponent<Transform>().transform.right;
+                knockedOrDash = true;
+                myRB.velocity += dir.normalized * dashSpeed;
+                StartCoroutine(KnockBackAndDash(dashTime));
+            }
+            else if (stamina >= staminaCostofDash)
+            {
+                stamina -= staminaCostofDash;
+                knockedOrDash = true;
+                myRB.velocity += dir.normalized * dashSpeed;
+                StartCoroutine(KnockBackAndDash(dashTime));
+            }
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.InputSystem;
 
 public class Grabber : MonoBehaviour
 {
@@ -25,6 +26,21 @@ public class Grabber : MonoBehaviour
     AstarPath path;
     Vector3 addDirection = new Vector3(.35f, 0f, 0f);
 
+    //Control variables
+    PlayerControls controls;
+    bool grabObj = false;
+    bool throwObj = false;
+
+    private void Awake()
+    {
+        controls = new PlayerControls();
+        controls.Gameplay.Grab.performed += ctx => grabObj = true;
+        controls.Gameplay.Grab.canceled += ctx => grabObj = false;
+
+        controls.Gameplay.Shoot.performed += ctx => throwObj = true;
+        controls.Gameplay.Shoot.canceled += ctx => throwObj = false;
+    }
+
     private void Start()
     {
         grip = maxGrip;
@@ -47,6 +63,11 @@ public class Grabber : MonoBehaviour
         SoreHands();
     }
 
+    private void OnEnable()
+    {
+        controls.Gameplay.Enable();
+    }
+
     public void GrabObject()
     {
 
@@ -54,7 +75,7 @@ public class Grabber : MonoBehaviour
         {
             if (grabber.IsTouching(d.GetComponent<CapsuleCollider2D>()))
             {
-                if (Input.GetMouseButtonDown(1) && d.draggable && canGrab)
+                if (grabObj && d.draggable && canGrab)
                 {
                     d.GetComponent<EnemyAI>().useDefaultMovement = false;
                     //we set it as a child of the stem
@@ -67,6 +88,7 @@ public class Grabber : MonoBehaviour
                     canShoot = false;
                     canGrab = false;
                     path.Scan();
+                    grabObj = false;
                     timeDelay = 0;
                 }
             }
@@ -75,7 +97,7 @@ public class Grabber : MonoBehaviour
         {
             if (grabber.IsTouching(d.GetComponent<BoxCollider2D>()))
             {
-                if (Input.GetMouseButtonDown(1) && d.draggable && canGrab)
+                if (grabObj && d.draggable && canGrab)
                 {
                     //we set it as a child of the stem
                     d.transform.SetParent(this.transform.parent);
@@ -89,6 +111,7 @@ public class Grabber : MonoBehaviour
                     canShoot = false;
                     canGrab = false;
                     path.Scan();
+                    grabObj = false;
                     timeDelay = 0;
                 }
             }
@@ -188,7 +211,7 @@ public class Grabber : MonoBehaviour
 
     public void LetGoObject()
     {
-        if (Input.GetMouseButtonDown(1) && hldObj && (timeDelay >= startTimeDelay))
+        if (grabObj && hldObj && (timeDelay >= startTimeDelay))
         {
             Debug.Log(d.name + " dropped");
             if(d.tag.Equals("Obstacle"))
@@ -204,7 +227,7 @@ public class Grabber : MonoBehaviour
             hldObj = false;
             d = null;
         }
-        else if (Input.GetMouseButtonDown(0) && hldObj)
+        else if (throwObj && hldObj)
         {
             if (d.tag.Equals("Obstacle"))
             {

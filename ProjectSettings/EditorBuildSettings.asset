@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndCredits.unity
     guid: fde5ba8e4154b4141943a6872d37af37
+  - enabled: 1
+    path: Assets/Scenes/LevelCompleteMenu.unity
+    guid: a27d94e13a22a754883c0e13ddb43ef4
   m_configObjects: {}
