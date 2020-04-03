@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class MeatScript : MonoBehaviour
 {
+    Animator meat_Anim;
+
     public List<Sprite> meatImgs;
     public float meatQuantity;
     public float meatTimer;
@@ -19,20 +21,14 @@ public class MeatScript : MonoBehaviour
 
     private void Start()
     {
+        meat_Anim = GetComponent<Animator>();
         meat = meatQuantity;
     }
 
     private void Update()
     {
         //update meat sprite
-        if(meat > (meatQuantity / 2))
-        {
-            this.transform.GetComponent<SpriteRenderer>().sprite = meatImgs[0];
-        }
-        else
-        {
-            this.transform.GetComponent<SpriteRenderer>().sprite = meatImgs[1];
-        }
+        meat_Anim.SetInteger("meatQuantity", (int)meat);
         //Update feed timer
         if (playerIsOn)
         {
@@ -46,15 +42,15 @@ public class MeatScript : MonoBehaviour
             {
                 meat -= eatRate/playerCount;
                 player.Health += eatRate/playerCount;
-                Debug.Log(player.Health);
+                //Debug.Log(player.Health);
                 feedTimer = 0;
             }
         }
         //Destroy meat
-        if(meat == 0)
+        if(meat <= 0)
         {
             Debug.Log("Meat has finished");
-            Destroy(this.gameObject);
+            Destroy(this.gameObject,1f);
         }
     }
 

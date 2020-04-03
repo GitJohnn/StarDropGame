@@ -80,6 +80,14 @@ public class PlayerControls : IInputActionCollection
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5e0216a-8d96-429b-b06d-b923c940c229"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -108,7 +116,7 @@ public class PlayerControls : IInputActionCollection
                 {
                     ""name"": """",
                     ""id"": ""9867c563-8634-41cc-8fb6-64da5e86c8ee"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -273,11 +281,22 @@ public class PlayerControls : IInputActionCollection
                 {
                     ""name"": """",
                     ""id"": ""5fbaaa99-1a80-424b-9308-a2977eee523b"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bb3f5ff-2411-45df-a6f4-0de3e3602e8f"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -324,6 +343,7 @@ public class PlayerControls : IInputActionCollection
         m_Gameplay_Aim_RS = m_Gameplay.GetAction("Aim_RS");
         m_Gameplay_Shoot = m_Gameplay.GetAction("Shoot");
         m_Gameplay_Jump = m_Gameplay.GetAction("Jump");
+        m_Gameplay_Interact = m_Gameplay.GetAction("Interact");
     }
 
     ~PlayerControls()
@@ -381,6 +401,7 @@ public class PlayerControls : IInputActionCollection
     private readonly InputAction m_Gameplay_Aim_RS;
     private readonly InputAction m_Gameplay_Shoot;
     private readonly InputAction m_Gameplay_Jump;
+    private readonly InputAction m_Gameplay_Interact;
     public struct GameplayActions
     {
         private PlayerControls m_Wrapper;
@@ -393,6 +414,7 @@ public class PlayerControls : IInputActionCollection
         public InputAction @Aim_RS => m_Wrapper.m_Gameplay_Aim_RS;
         public InputAction @Shoot => m_Wrapper.m_Gameplay_Shoot;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+        public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -426,6 +448,9 @@ public class PlayerControls : IInputActionCollection
                 Jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 Jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 Jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                Interact.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
+                Interact.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
+                Interact.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -454,6 +479,9 @@ public class PlayerControls : IInputActionCollection
                 Jump.started += instance.OnJump;
                 Jump.performed += instance.OnJump;
                 Jump.canceled += instance.OnJump;
+                Interact.started += instance.OnInteract;
+                Interact.performed += instance.OnInteract;
+                Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -486,5 +514,6 @@ public class PlayerControls : IInputActionCollection
         void OnAim_RS(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

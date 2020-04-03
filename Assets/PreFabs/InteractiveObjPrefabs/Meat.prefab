@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7186880438586336146}
   - component: {fileID: 7186880438586336149}
   - component: {fileID: 7186880438586336144}
+  - component: {fileID: 47536670}
   m_Layer: 0
   m_Name: Meat
   m_TagString: Untagged
@@ -70,8 +71,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1f878a5bca17176458d515c2ee56ce89, type: 3}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 3f80ec3f9ed95304cb08727123a140cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -111,8 +112,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meatImgs:
-  - {fileID: 21300000, guid: 1f878a5bca17176458d515c2ee56ce89, type: 3}
-  - {fileID: 21300000, guid: a6518594f10ba9144ba0dd96fc720afb, type: 3}
+  - {fileID: 21300000, guid: 3f80ec3f9ed95304cb08727123a140cd, type: 3}
+  - {fileID: 21300000, guid: 0a6e7c8b8a1265d45ae345c789b294e8, type: 3}
   meatQuantity: 20
   meatTimer: 1.2
   eatRate: 5
+--- !u!95 &47536670
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7186880438586336148}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14241b9c25fffb841a1d7626c5be5521, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -6,7 +6,7 @@ using System;
 
 public class EnemyAI : MonoBehaviour {
 
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     GameManager manager;
     Animator slimeAnim;
     Draggable isdraggable;
@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour {
     SlimeScript slime = null;
     GolemScript golem = null;
     BullScript bull = null;
+    BlazerScript blazer = null;
 
     [SerializeField] float health = 100f;
     [SerializeField] float speed;
@@ -28,20 +29,19 @@ public class EnemyAI : MonoBehaviour {
     int currentWaypoint = 0;
     bool atEndOfPath = false;
     float distanceToPlayer;
-
+    
     public GameObject player;
     public Seeker seeker;
+    public float dmgTimer;
     public bool useDefaultMovement = true;
+    public bool moving = false;
+    public bool isDmg = false;
 
     // Start is called before the first frame update
     void Start() {
         homePoint = this.transform.position;
         if (this.gameObject.name.Contains("Slime"))
         {
-            if (GetComponentInChildren<Animator>())
-            {
-                slimeAnim = GetComponentInChildren<Animator>();
-            }
             slime = GetComponent<SlimeScript>();
         }
         else if (this.gameObject.name.Contains("Golem"))
@@ -51,6 +51,10 @@ public class EnemyAI : MonoBehaviour {
         else if (this.gameObject.name.Contains("Bull"))
         {
             bull = GetComponent<BullScript>();
+        }
+        else if (this.gameObject.name.Contains("Blazer"))
+        {
+            blazer = GetComponent<BlazerScript>();
         }
         player = GameObject.Find("Player");
         seeker = GetComponent<Seeker>();
@@ -88,6 +92,7 @@ public class EnemyAI : MonoBehaviour {
                 bull.Attack();
             }
         }
+        
 
         if (useDefaultMovement)
         {
@@ -96,6 +101,15 @@ public class EnemyAI : MonoBehaviour {
         }
 
         CheckIfDeath();
+        //check if moving
+        if(rb.velocity.magnitude > 0f)
+        {
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
     }
 
     //Look Towards player
@@ -120,7 +134,6 @@ public class EnemyAI : MonoBehaviour {
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
         rb.AddForce(force);
-        //rb.velocity = force; //this would be better for movement, but doesn't work.
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -163,11 +176,7 @@ public class EnemyAI : MonoBehaviour {
         {
             health -= dmg;
         }
-        //change animations
-        if (slime)
-        {
-            StartCoroutine(changeAnimator(slimeAnim));
-        }
+        StartCoroutine(damage());
     }
 
     public float Speed
@@ -203,10 +212,10 @@ public class EnemyAI : MonoBehaviour {
         return (attackRadius >= distanceToPlayer);
     }
 
-    IEnumerator changeAnimator(Animator anim)
+    IEnumerator damage()
     {
-        anim.SetBool("isDmg", true);
-        yield return new WaitForSeconds(0.5f);
-        anim.SetBool("isDmg", false);
+        isDmg = true;
+        yield return new WaitForSeconds(dmgTimer);
+        isDmg = false;
     }
 }

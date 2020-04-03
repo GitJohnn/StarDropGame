@@ -18,10 +18,14 @@ public class GolemScript : MonoBehaviour
     public float startTimeAttack;
     public float bolderAttackDelay;
     public float stompAttackDelay;
+    Animator anim;
+    SpriteRenderer sprite;
     EnemyAI enemyAI;
     Grabber playerGrab;
     LayerMask stompVictims = 9;
     bool isAttacking = false;
+    bool throwAttack = false;
+    bool stompAttack = false;
     float timeAttack;
     float distance;
 
@@ -29,17 +33,36 @@ public class GolemScript : MonoBehaviour
     {
         playerGrab = GameObject.FindGameObjectWithTag("Grabber").GetComponent<Grabber>();
         enemyAI = GetComponent<EnemyAI>();
+        anim = GetComponentInChildren<Animator>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
     {
         bulletSpawn.transform.parent.rotation = enemyAI.LookAtPlayer();
+        AnimUpdate();
+    }
+
+    void AnimUpdate()
+    {
+        anim.SetBool("move", enemyAI.moving);
+        anim.SetBool("throw_attack", throwAttack);
+        anim.SetBool("stomp_attack", stompAttack);
     }
 
     public void Attack(GameObject player, float attackDis, float stopDis, Rigidbody2D golemRB)
     {
-        distance = Vector3.Distance(transform.position, player.transform.position);
-        if(canThrowBoulder && canStomp)
+        Vector2 direction = player.transform.position - this.transform.position;
+        distance = direction.magnitude;
+        if (direction.x < -0.1)
+        {
+            sprite.flipX = true;
+        }
+        else if (direction.x > 0.1)
+        {
+            sprite.flipX = false;
+        }
+        if (canThrowBoulder && canStomp)
         {
             //We make a Boulder attack;
             if (canThrowBoulder)
@@ -68,10 +91,12 @@ public class GolemScript : MonoBehaviour
     IEnumerator BolderThrowDelay(float time, Rigidbody2D golemRB)
     {
         isAttacking = true;
+        throwAttack = true;
         golemRB.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(time);
         Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
         isAttacking = false;
+        throwAttack = false;
         timeAttack = 0;
         golemRB.constraints = RigidbodyConstraints2D.None;
         golemRB.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -80,6 +105,8 @@ public class GolemScript : MonoBehaviour
     IEnumerator StompingDelay(float time,float stompRadius,Rigidbody2D golemRB)
     {
         isAttacking = true;
+        stompAttack = true;
+        yield return new WaitForSeconds(time);
         golemRB.constraints = RigidbodyConstraints2D.FreezeAll;
         RaycastHit2D[] sphereInfo = Physics2D.CircleCastAll(transform.position, stompRadius, -Vector2.up, stompRadius * 2, stompVictims);
         foreach (RaycastHit2D ray in sphereInfo)
@@ -99,8 +126,8 @@ public class GolemScript : MonoBehaviour
         {
             Instantiate(stompGolemBullet, i.transform.position, i.transform.rotation);
         }
-        yield return new WaitForSeconds(time);
         isAttacking = false;
+        stompAttack = false;
         timeAttack = 0;
         golemRB.constraints = RigidbodyConstraints2D.None;
         golemRB.constraints = RigidbodyConstraints2D.FreezeRotation;

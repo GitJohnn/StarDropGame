@@ -7,7 +7,7 @@ public class Shooting : MonoBehaviour
 {
     public GameObject bullet;
     public Transform shotPos;
-    float shootrate = 0.5f;
+    float shootrate = 0.1f;
     float currentShootrate = 0;
     GameManager manager;
     //short for grabber
