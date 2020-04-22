@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51bc755b0ab08cb4eb8b8e9f91f19cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   health: 100
   speed: 500
   nextWaypointDistance: 0.1
@@ -156,8 +157,6 @@ MonoBehaviour:
   chaseRadius: 8
   attackRadius: 1.5
   stopRadius: 0.4
-  Direction: {x: 0, y: 0}
-  player: {fileID: 0}
   seeker: {fileID: 361026374588217004}
   dmgTimer: 0.5
   useDefaultMovement: 1

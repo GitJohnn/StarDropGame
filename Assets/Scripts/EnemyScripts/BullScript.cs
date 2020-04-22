@@ -42,7 +42,7 @@ public class BullScript : MonoBehaviour {
 
         SetRigidbodyRestraints(!(isAttacking ^ returnHome));
         this.transform.rotation = AI.LookAtPlayer();
-        if (!AI.isInAttackRaduis()) {
+        if (!AI.isInAttackRadius()) {
             timeElapsedInRadius = 0;
             timeElapsedNotInRadius += Time.deltaTime;
         }
@@ -56,7 +56,7 @@ public class BullScript : MonoBehaviour {
         if (stunTime > 0) {
             stunTime -= Time.deltaTime;
         } else {
-            if (AI.isInAttackRaduis()) {
+            if (AI.isInAttackRadius()) {
                 timeElapsedInRadius += Time.deltaTime;
                 timeElapsedNotInRadius = 0;
             }

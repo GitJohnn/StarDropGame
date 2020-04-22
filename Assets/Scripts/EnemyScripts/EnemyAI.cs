@@ -6,7 +6,7 @@ using System;
 
 public class EnemyAI : MonoBehaviour {
 
-    public Rigidbody2D rb;
+    Rigidbody2D rb;
     GameManager manager;
     Animator slimeAnim;
     Draggable isdraggable;
@@ -15,6 +15,8 @@ public class EnemyAI : MonoBehaviour {
     GolemScript golem = null;
     BullScript bull = null;
     BlazerScript blazer = null;
+    [HideInInspector]
+    public GameObject player;
 
     [SerializeField] float health = 100f;
     [SerializeField] float speed;
@@ -30,7 +32,6 @@ public class EnemyAI : MonoBehaviour {
     bool atEndOfPath = false;
     float distanceToPlayer;
     
-    public GameObject player;
     public Seeker seeker;
     public float dmgTimer;
     public bool useDefaultMovement = true;
@@ -40,6 +41,8 @@ public class EnemyAI : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         homePoint = this.transform.position;
+        //getting crowded need to think of a way to change -
+        //this movement setup for each enemy accordingly
         if (this.gameObject.name.Contains("Slime"))
         {
             slime = GetComponent<SlimeScript>();
@@ -56,7 +59,7 @@ public class EnemyAI : MonoBehaviour {
         {
             blazer = GetComponent<BlazerScript>();
         }
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         isdraggable = GetComponent<Draggable>();
@@ -90,9 +93,10 @@ public class EnemyAI : MonoBehaviour {
                 golem.Attack(player, attackRadius, stopRadius, rb);
             } else if (bull) {
                 bull.Attack();
+            } else if (blazer) {
+               // blazer.Attack();
             }
-        }
-        
+        }        
 
         if (useDefaultMovement)
         {
@@ -200,15 +204,15 @@ public class EnemyAI : MonoBehaviour {
         return homePoint;
     }
 
-    public bool isInAttackRaduis() {
+    public bool isInAttackRadius() {
         return (attackRadius >= distanceToPlayer);
     }
 
-    public bool isInChaseRaduis() {
+    public bool isInChaseRadius() {
         return (attackRadius >= distanceToPlayer);
     }
 
-    public bool isInStopRaduis() {
+    public bool isInStopRadius() {
         return (attackRadius >= distanceToPlayer);
     }
 
