@@ -6,11 +6,11 @@ using Pathfinding;
 public class Draggable : MonoBehaviour
 {
     public bool draggable = true;
-    public float speed = 10f;
-    public float startTimeDistance = .5f;
+    public float speed;
+    public float startTimeDistance;
     public float weight;
     public float durability;
-    public float damage = 50f;
+    public float damage;
 
     bool isHeld = false;
     Rigidbody2D myRB;
@@ -34,6 +34,10 @@ public class Draggable : MonoBehaviour
         if (act)
         {
             ShootObj(act, dir, path);
+        }
+        else
+        {
+            myRB.velocity = Vector3.zero;
         }
         if (transform.tag.Equals("Obstacle"))
         {
@@ -59,7 +63,8 @@ public class Draggable : MonoBehaviour
         if (timeDistance <= startTimeDistance)
         {
             // if we want to make the object bounce we need to change this.
-            this.transform.position += (Vector3)direction * speed * Time.deltaTime;
+            //this.transform.position += (Vector3)direction * speed * Time.deltaTime;
+            myRB.velocity = (Vector3)direction * speed * Time.deltaTime;
         }
         else
         {
@@ -84,11 +89,26 @@ public class Draggable : MonoBehaviour
         {
             collision.transform.GetComponent<EnemyAI>().Damage(damage);
         }
+        //stop object if collide with wall
+        if(collision.gameObject.layer.Equals("Walls") && act)
+        {
+            Debug.Log("Touched wall");
+            act = false;
+            StartCoroutine(BounceBack());
+        }
         // When enemy is thrown take damage when collide with obstacle
         if(collision.transform.tag.Equals("Obstacle") && act && transform.tag.Equals("Enemy"))
         {
             GetComponent<EnemyAI>().Damage(damage);
         }
+    }
+
+    IEnumerator BounceBack()
+    {
+        //flip velocity to bounce back.
+        myRB.velocity = myRB.velocity * -1;
+        yield return new WaitForSeconds(0.25f);
+        myRB.velocity = Vector3.zero;
     }
 
     public bool IsHeld
