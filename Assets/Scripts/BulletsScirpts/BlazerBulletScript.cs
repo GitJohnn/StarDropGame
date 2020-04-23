@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class BlazerBulletScript : MonoBehaviour
 {
+    public GameObject fire;
+
     Rigidbody2D bulletRB;
     GameManager manager;
     Vector3 dir;
+    int fireCounter = 0;
+    int MaxFire = 15;
+    float fireTimer = -0.05f;
+    float startFireTimer = 0.03f;
+    public float BulletDmg = 30f;
     public float speed = 1.5f;
     public float lifetime = 3f;
 
@@ -19,12 +26,27 @@ public class BlazerBulletScript : MonoBehaviour
     void SetFire()
     {
         //instantiate fire
+        if(fireTimer >= startFireTimer && (fireCounter<=MaxFire))
+        {
+            fireCounter++;
+            GameObject newFire = Instantiate(fire, this.transform.position,Quaternion.identity);
+            Destroy(newFire, 0.95f);
+            fireTimer = 0;
+        }
+        else
+        {
+            fireTimer += 1 * Time.deltaTime;
+        }
     }
 
     private void Update()
     {
         MoveTowards(dir);
-        Destroy(this, lifetime);
+        SetFire();
+        if(fireCounter == MaxFire)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void MoveTowards(Vector3 direction)
@@ -41,7 +63,10 @@ public class BlazerBulletScript : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if (collision.transform.tag.Equals("Player"))
         {
-            Debug.Log("hit player");
+            collision.GetComponent<Movement>().Damage(BulletDmg);
+            collision.GetComponent<Movement>().takeKnockBack(this.transform.position,20f);
+            GameObject newFire = Instantiate(fire, this.transform.position, Quaternion.identity);
+            Destroy(newFire, 0.95f);
             Destroy(this.gameObject);
         }
         if (collision.gameObject.name.Equals("Walls"))

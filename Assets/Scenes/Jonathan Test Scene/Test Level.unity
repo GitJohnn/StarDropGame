@@ -1178,26 +1178,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 9174969748049099086}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1019989076 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1195715965, guid: f90c3b01347b7154c93f5c36108bead0,
-    type: 3}
-  m_PrefabInstance: {fileID: 9125608888047039588}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1019989080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019989076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff17fdec3106f1408deff196910b78e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useBounds: 1
-  playertransform: {fileID: 2022970255}
 --- !u!1 &1023873910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,7 +1460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectTiming: 1
-  speedMultiplier: 3
+  speedMultiplier: 2
 --- !u!1001 &1067320097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7607,12 +7587,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 9174969748049099086}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &2022970255 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4369935495060941052, guid: f90c3b01347b7154c93f5c36108bead0,
-    type: 3}
-  m_PrefabInstance: {fileID: 9125608888047039588}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2057274207 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9125608888302341177, guid: f90c3b01347b7154c93f5c36108bead0,
@@ -9202,10 +9176,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1195715965, guid: f90c3b01347b7154c93f5c36108bead0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4369935495060941052, guid: f90c3b01347b7154c93f5c36108bead0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9311,12 +9281,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 9125608888302341178, guid: f90c3b01347b7154c93f5c36108bead0,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 0824803ae27c7b045a0adf1d41cd3621,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f90c3b01347b7154c93f5c36108bead0, type: 3}
 --- !u!1001 &9174969748049099086

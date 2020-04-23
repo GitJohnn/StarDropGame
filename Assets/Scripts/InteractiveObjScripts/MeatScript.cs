@@ -42,7 +42,6 @@ public class MeatScript : MonoBehaviour
             {
                 meat -= eatRate/playerCount;
                 player.Health += eatRate/playerCount;
-                //Debug.Log(player.Health);
                 feedTimer = 0;
             }
         }

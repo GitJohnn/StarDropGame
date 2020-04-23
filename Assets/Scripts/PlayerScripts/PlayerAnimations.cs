@@ -50,5 +50,14 @@ public class PlayerAnimations : MonoBehaviour
             img.flipX = false;
             anim.SetBool("Moving", true);
         }
+
+        if (player.knockedOrDash)
+        {
+            anim.SetBool("Dashing", true);
+        }
+        else
+        {
+            anim.SetBool("Dashing", false);
+        }
     }
 }

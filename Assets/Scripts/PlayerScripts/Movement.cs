@@ -11,12 +11,8 @@ public class Movement : MonoBehaviour
     Vector3 moveVelocity;
     Vector3 moveTowards;
 
-    public float airTime;
-    public float maxStamina = 100f;
-    public float maxHealth = 100f;
-    public float staminaCostofDash = 7.5f;
-    public float baseSpeed;
-    public float modSpeed;
+    [HideInInspector]
+    public float airTime = 2, maxStamina = 100f, maxHealth = 100f, staminaCostofDash = 7.5f, baseSpeed = 5, modSpeed = 1; //Multiplay modspeed number to change speed.
     float currentSpeed;
     float health;
     float stamina;
@@ -24,8 +20,8 @@ public class Movement : MonoBehaviour
     float dashTime = .2f;
     float dashSpeed = 13f;
     Vector3 dashDir;
-    public bool isJumping = false;
-    bool knockedOrDash;
+    [HideInInspector]
+    public bool isJumping = false, knockedOrDash = false;
 
     //Control variables
     PlayerControls controls;
