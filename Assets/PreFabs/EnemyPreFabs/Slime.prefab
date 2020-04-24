@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   health: 100
-  speed: 500
+  speed: 1500
   nextWaypointDistance: 0.1
   target: {x: 0, y: 0}
   chaseRadius: 8
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   draggable: 1
-  speed: 10
+  speed: 900
   startTimeDistance: 0.5
   weight: 0
   durability: 0
