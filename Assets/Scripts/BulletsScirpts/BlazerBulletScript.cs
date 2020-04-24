@@ -5,6 +5,8 @@ using UnityEngine;
 public class BlazerBulletScript : MonoBehaviour
 {
     public GameObject fire;
+    [HideInInspector]
+    public GameObject OriginParent;
 
     Rigidbody2D bulletRB;
     GameManager manager;
@@ -60,11 +62,17 @@ public class BlazerBulletScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (collision.transform.tag.Equals("Player"))
         {
             collision.GetComponent<Movement>().Damage(BulletDmg);
             collision.GetComponent<Movement>().takeKnockBack(this.transform.position,20f);
+            GameObject newFire = Instantiate(fire, this.transform.position, Quaternion.identity);
+            Destroy(newFire, 0.95f);
+            Destroy(this.gameObject);
+        }
+        if (collision.transform.tag.Equals("Enemy") && (collision.gameObject != OriginParent))
+        {
+            collision.GetComponent<EnemyAI>().Damage(BulletDmg, 20, 0.8f,this.transform);
             GameObject newFire = Instantiate(fire, this.transform.position, Quaternion.identity);
             Destroy(newFire, 0.95f);
             Destroy(this.gameObject);

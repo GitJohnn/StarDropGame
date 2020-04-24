@@ -59,8 +59,7 @@ public class Projectile : MonoBehaviour
         {
             if (other.tag.Equals("Enemy") && other.transform != bulletParent)
             {
-                other.transform.GetComponent<EnemyAI>().Damage(dmg);
-                other.transform.GetComponent<EnemyAI>().takeKnockBack(transform.position, knockBackDealt);
+                other.transform.GetComponent<EnemyAI>().Damage(dmg, knockBackDealt,0.5f,this.transform);
             }
             if (other.tag.Equals("Player") && !other.GetComponent<Movement>().isJumping)
             {
@@ -73,8 +72,7 @@ public class Projectile : MonoBehaviour
         {
             if (other.tag.Equals("Enemy"))
             {
-                other.transform.GetComponent<EnemyAI>().Damage(dmg);
-                other.transform.GetComponent<EnemyAI>().takeKnockBack(transform.position, knockBackDealt);
+                other.transform.GetComponent<EnemyAI>().Damage(dmg, knockBackDealt,0.5f,this.transform);
                 Destroy(gameObject);
             }
         }

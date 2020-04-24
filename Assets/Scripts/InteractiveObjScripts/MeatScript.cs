@@ -59,7 +59,6 @@ public class MeatScript : MonoBehaviour
         {
             playerCount++;
             player = collision.GetComponent<Movement>();
-            Debug.Log("Player entered");
             playerIsOn = true;
             feedTimer = 0;
         }

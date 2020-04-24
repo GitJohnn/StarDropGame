@@ -76,6 +76,7 @@ public class BlazerScript : MonoBehaviour
     public void Attack()
     {
         GameObject blazerbullet = Instantiate(bullet, this.transform);
+        blazerbullet.GetComponent<BlazerBulletScript>().OriginParent = this.gameObject;
         blazerbullet.GetComponent<BlazerBulletScript>().MoveTowards(GameObject.FindGameObjectWithTag("Player").transform.position - blazerbullet.transform.position);
         attacking = false;
     }
