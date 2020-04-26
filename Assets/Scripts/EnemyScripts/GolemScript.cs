@@ -118,8 +118,7 @@ public class GolemScript : MonoBehaviour
             }
             if (ray.collider.tag.Equals("Enemy") && ray.collider != gameObject.GetComponent<CircleCollider2D>())
             {
-                ray.collider.GetComponent<EnemyAI>().Damage(stompDmg);
-                ray.collider.GetComponent<EnemyAI>().takeKnockBack(transform.position, stompKnockback);
+                ray.collider.GetComponent<EnemyAI>().Damage(stompDmg, stompKnockback,0.2f,this.transform);
             }
         }
         foreach (GameObject i in stompBulletSpawn)

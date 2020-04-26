@@ -21,22 +21,26 @@ public class EnemyAI : MonoBehaviour {
     [SerializeField] float health = 100f;
     [SerializeField] float speed;
     [SerializeField] float nextWaypointDistance = .1f;
-    [SerializeField] Vector2 target;
     [SerializeField] float chaseRadius;
     [SerializeField] float attackRadius;
     [SerializeField] float stopRadius;
 
     Path path;
     Vector3 homePoint;
+    Vector2 target;
+    Vector2 knockDir = Vector2.zero;
     int currentWaypoint = 0;
     bool atEndOfPath = false;
     float distanceToPlayer;
-    
-    public Seeker seeker;
-    public float dmgTimer;
+    float knockbackMultiplier;
+    float dmgTimer = 0f;
+
+    [HideInInspector]
     public bool useDefaultMovement = true;
-    public bool moving = false;
-    public bool isDmg = false;
+
+    public Seeker seeker;
+    //[HideInInspector]
+    public bool moving = false, isDmg = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -83,7 +87,7 @@ public class EnemyAI : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate() {
+    void Update() {
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         if (attackRadius >= distanceToPlayer && !manager.IsPaused && !manager.IsGameOver) {
             //set the enemyAI to use the script given.
@@ -98,22 +102,23 @@ public class EnemyAI : MonoBehaviour {
             }
         }        
 
-        if (useDefaultMovement)
+        if (useDefaultMovement && !isDmg)
         {
             UpdateTarget();
             FollowPath();
         }
 
+        if (isDmg)
+        {
+            //Vector3 direction = transform.position - (Vector3)target;
+            Vector2 force = knockDir.normalized * knockbackMultiplier * 1000 * Time.deltaTime;
+            rb.AddForce(force);
+            //rb.velocity = (Vector2)direction.normalized * knockbackMultiplier * Time.deltaTime;
+        }
+
         CheckIfDeath();
         //check if moving
-        if(rb.velocity.magnitude > 0f)
-        {
-            moving = true;
-        }
-        else
-        {
-            moving = false;
-        }
+        StartCoroutine(CheckMovement());
     }
 
     //Look Towards player
@@ -135,9 +140,12 @@ public class EnemyAI : MonoBehaviour {
             return;
         }
 
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        Vector2 force = direction * speed * Time.deltaTime;
+        Vector3 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position);
+        Vector2 force = direction * speed * 1000 * Time.deltaTime;
         rb.AddForce(force);
+        //transform.position += direction.normalized * speed * Time.deltaTime;
+        //rb.velocity = direction.normalized * speed * Time.deltaTime;
+        
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -174,13 +182,16 @@ public class EnemyAI : MonoBehaviour {
         }
     }
 
-    public void Damage(float dmg)
+    public void Damage(float dmg, float knockbackforce, float knockbackTimer, Transform BulletTransform)
     {
+        knockDir = this.transform.position - BulletTransform.position;
+        dmgTimer = knockbackTimer;
+        knockbackMultiplier = knockbackforce;
         if (health > 0f)
         {
             health -= dmg;
         }
-        StartCoroutine(damage());
+        StartCoroutine(DamageTiming());
     }
 
     public float Speed
@@ -193,11 +204,6 @@ public class EnemyAI : MonoBehaviour {
     {
         get { return health; }
         set { health = value; }
-    }
-
-    public void takeKnockBack(Vector3 position, float knockBackForce) {
-        Vector3 direction = Vector3.Normalize(transform.position - position);
-        rb.velocity = direction.normalized * knockBackForce;
     }
 
     public Vector3 getHomePoint() {
@@ -216,7 +222,23 @@ public class EnemyAI : MonoBehaviour {
         return (attackRadius >= distanceToPlayer);
     }
 
-    IEnumerator damage()
+    IEnumerator CheckMovement()
+    {
+        Vector2 InitPos = transform.position;
+        yield return new WaitForSeconds(0.1f);
+        Vector2 FinPos = transform.position;
+
+        if((InitPos - FinPos).magnitude > 0)
+        {
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+    }
+
+    IEnumerator DamageTiming()
     {
         isDmg = true;
         yield return new WaitForSeconds(dmgTimer);

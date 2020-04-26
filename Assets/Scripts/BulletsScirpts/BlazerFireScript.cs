@@ -8,7 +8,6 @@ public class BlazerFireScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.name);
         if (collision.transform.tag.Equals("Player"))
         {
             collision.GetComponent<Movement>().Damage(dmg);

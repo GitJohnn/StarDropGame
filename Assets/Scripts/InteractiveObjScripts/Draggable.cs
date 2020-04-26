@@ -87,7 +87,7 @@ public class Draggable : MonoBehaviour
         // Damage enemy is the object is moving
         if (collision.transform.tag.Equals("Enemy") && act)
         {
-            collision.transform.GetComponent<EnemyAI>().Damage(damage);
+            collision.transform.GetComponent<EnemyAI>().Damage(damage,10,0.3f,this.transform);
         }
         //stop object if collide with wall
         if(collision.gameObject.layer.Equals("Walls") && act)
@@ -99,7 +99,7 @@ public class Draggable : MonoBehaviour
         // When enemy is thrown take damage when collide with obstacle
         if(collision.transform.tag.Equals("Obstacle") && act && transform.tag.Equals("Enemy"))
         {
-            GetComponent<EnemyAI>().Damage(damage);
+            GetComponent<EnemyAI>().Damage(damage,10,0.3f,this.transform);
         }
     }
 

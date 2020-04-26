@@ -151,15 +151,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   health: 100
-  speed: 1500
+  speed: 15
   nextWaypointDistance: 0.1
-  target: {x: 0, y: 0}
   chaseRadius: 8
   attackRadius: 1.5
   stopRadius: 0.4
-  seeker: {fileID: 361026374588217004}
-  dmgTimer: 0.5
   useDefaultMovement: 1
+  seeker: {fileID: 361026374588217004}
   moving: 0
   isDmg: 0
 --- !u!114 &5841170706581527810
@@ -223,7 +221,7 @@ MonoBehaviour:
   startTimeDistance: 0.5
   weight: 0
   durability: 0
-  damage: 50
+  damage: 20
 --- !u!50 &361026374588217001
 Rigidbody2D:
   serializedVersion: 4
@@ -237,10 +235,10 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
-  m_AngularDrag: 0.05
+  m_LinearDrag: 0
+  m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: 5e98e0dcb2028554e9c5a48d6190e272, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
