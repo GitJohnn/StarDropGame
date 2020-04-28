@@ -89,7 +89,7 @@ public class EnemyAI : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-        if (attackRadius >= distanceToPlayer && !manager.IsPaused && !manager.IsGameOver && path != null && path.vectorPath.Count < 3) {
+        if (attackRadius >= distanceToPlayer && !manager.IsPaused && !manager.IsGameOver) {
             //set the enemyAI to use the script given.
             if (slime) {
                 slime.Attack(player);
