@@ -37,20 +37,20 @@ public class ButtonManager : MonoBehaviour
 
     public void PlayBtn()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(1);
     }
     public void NextLevelBtn()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(1);
     }
     public void ReplayBtn()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(1);
     }
 
     public void MenuBtn()
     {
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene(0);
     }
 
     public void QuitBtn()

@@ -81,7 +81,6 @@ public class Grabber : MonoBehaviour
                     //we set it as a child of the stem
                     d.transform.SetParent(this.transform.parent);
                     d.transform.position = this.transform.position;
-                    Debug.Log(d.transform.name + " is Grabbed");
                     d.transform.rotation = Quaternion.identity;
                     d.IsHeld = true;
                     hldObj = true;

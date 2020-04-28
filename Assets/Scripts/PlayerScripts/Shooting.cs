@@ -54,10 +54,10 @@ public class Shooting : MonoBehaviour
 
     void Shoot()
     {
-        if (grabObj.canShoot && !manager.IsPaused && !manager.IsGameOver && (currentShootrate >= shootrate))
+        if (grabObj && grabObj.canShoot && !manager.IsPaused && !manager.IsGameOver && (currentShootrate >= shootrate) && !manager.WinPanel.activeInHierarchy)
         {
-            Instantiate(bullet,shotPos.position,transform.rotation);
-            currentShootrate = 0;
+                Instantiate(bullet, shotPos.position, transform.rotation);
+                currentShootrate = 0;
         }
     }
 

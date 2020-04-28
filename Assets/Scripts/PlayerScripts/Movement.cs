@@ -34,6 +34,7 @@ public class Movement : MonoBehaviour
         health = maxHealth;
         myRB = GetComponent<Rigidbody2D>();
         player = this.gameObject;
+        print(player);
 
         controls = new PlayerControls();
         controls.Gameplay.Move_LS.performed += ctx => move = ctx.ReadValue<Vector2>();
@@ -87,7 +88,7 @@ public class Movement : MonoBehaviour
 
     void Jump()
     {
-        if (!knockedOrDash & !isJumping)
+        if (player && !knockedOrDash & !isJumping)
         {
             isJumping = true;
             //set velocity equal to zero.
@@ -98,7 +99,7 @@ public class Movement : MonoBehaviour
 
     void Dash(Vector2 dir)
     {
-        if (!knockedOrDash & !isJumping)
+        if (player && !knockedOrDash & !isJumping)
         {
             //dash in mouse direction in case there is no movement
             if (dir == Vector2.zero && (stamina >= staminaCostofDash))

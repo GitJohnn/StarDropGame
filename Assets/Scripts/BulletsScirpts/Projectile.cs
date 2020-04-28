@@ -70,7 +70,7 @@ public class Projectile : MonoBehaviour
         }
         else if(transform.tag.Equals("NormalBullet"))
         {
-            if (other.tag.Equals("Enemy"))
+            if (other.tag.Equals("Enemy") && other.transform!=null)
             {
                 other.transform.GetComponent<EnemyAI>().Damage(dmg, knockBackDealt,0.5f,this.transform);
                 Destroy(gameObject);
