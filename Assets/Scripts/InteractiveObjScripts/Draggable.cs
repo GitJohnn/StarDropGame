@@ -64,7 +64,7 @@ public class Draggable : MonoBehaviour
         {
             // if we want to make the object bounce we need to change this.
             //this.transform.position += (Vector3)direction * speed * Time.deltaTime;
-            myRB.velocity = (Vector3)direction * speed * Time.deltaTime;
+            myRB.velocity = (Vector3)direction * speed;
         }
         else
         {

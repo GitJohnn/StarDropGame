@@ -122,9 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   draggable: 1
-  speed: 1000
+  speed: 10
   startTimeDistance: 0.5
-  weight: 10
+  weight: 1
   durability: 100
   damage: 50
 --- !u!50 &1374544682

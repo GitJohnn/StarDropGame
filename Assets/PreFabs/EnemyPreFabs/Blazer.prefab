@@ -54,9 +54,9 @@ MonoBehaviour:
   health: 100
   speed: 9
   nextWaypointDistance: 0.1
-  chaseRadius: 10
+  chaseRadius: 6
   attackRadius: 8
-  stopRadius: 6
+  stopRadius: 4
   useDefaultMovement: 1
   seeker: {fileID: 4431769043458384927}
   moving: 0

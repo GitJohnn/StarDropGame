@@ -153,7 +153,7 @@ MonoBehaviour:
   health: 100
   speed: 15
   nextWaypointDistance: 0.1
-  chaseRadius: 8
+  chaseRadius: 7
   attackRadius: 1.5
   stopRadius: 0.4
   useDefaultMovement: 1

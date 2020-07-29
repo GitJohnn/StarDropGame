@@ -77,6 +77,11 @@ public class BlazerBulletScript : MonoBehaviour
             Destroy(newFire, 0.95f);
             Destroy(this.gameObject);
         }
+        if (collision.transform.tag.Equals("Obstacle"))
+        {
+            collision.GetComponent<Draggable>().durability -= 50f;
+            Destroy(this.gameObject);
+        }
         if (collision.gameObject.name.Equals("Walls"))
         {
             Destroy(this.gameObject);
